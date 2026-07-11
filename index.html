@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KPS Premium Shop</title>
+    <title>KPS PREMIUM V2</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         :root {
@@ -98,8 +98,8 @@
         }
 
         .buy-button {
-            background-color: var(--text-main);
-            color: #000;
+            background-color: var(--accent-color);
+            color: #fff;
             border: none;
             padding: 8px;
             border-radius: 10px;
@@ -118,25 +118,89 @@
         .product-card {
             animation: glow 3s infinite;
         }
+
+        /* Bouton Commander pour la Mini App */
+        #commander-btn {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #fff;
+            color: #000;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            display: none;
+        }
     </style>
 </head>
 <body>
 
     <header>
-        <h1>SHOP KPS PREMIUM</h1>
+        <h1>SHOP KPS PREMIUM V2</h1>
         <p>Service de Refund Qualité</p>
     </header>
 
     <div class="products-grid" id="grid"></div>
 
+    <button id="commander-btn">COMMANDER SUR TELEGRAM</button>
+
     <script>
         const tg = window.Telegram.WebApp;
         tg.expand();
-        tg.MainButton.setText("COMMANDER SUR TELEGRAM");
-        tg.MainButton.setParams({
-            button_color: "#ffffff",
-            text_color: "#000000"
+        tg.ready();
+
+        const commanderBtn = document.getElementById('commander-btn');
+
+        // Les produits avec des images temporaires pour valider l'interface
+        const products = [
+            { id: 1, name: "iPhone 14 Pro / Max", price: "110€", img: "https://via.placeholder.com/150" },
+            { id: 2, name: "iPhone 15 / Plus", price: "130€", img: "https://via.placeholder.com/150" },
+            { id: 3, name: "iPhone 15 Pro / Max", price: "150€", img: "https://via.placeholder.com/150" },
+            { id: 4, name: "iPhone 16 / Plus", price: "230€", img: "https://via.placeholder.com/150" },
+            { id: 5, name: "iPhone 16 Pro / Max", price: "250€", img: "https://via.placeholder.com/150" },
+            { id: 6, name: "iPhone 17 Air", price: "200€", img: "https://via.placeholder.com/150" },
+            { id: 7, name: "iPhone 17", price: "270€", img: "https://via.placeholder.com/150" },
+            { id: 8, name: "iPhone 17 Pro", price: "320€", img: "https://via.placeholder.com/150" },
+            { id: 9, name: "iPhone 17 Pro Max", price: "350€", img: "https://via.placeholder.com/150" },
+            { id: 10, name: "MacBook Pro M3 14\"", price: "330€", img: "https://via.placeholder.com/150" },
+            { id: 11, name: "MacBook Neo Base", price: "150€", img: "https://via.placeholder.com/150" },
+            { id: 12, name: "MacBook Neo Supérieur", price: "180€", img: "https://via.placeholder.com/150" }
+        ];
+
+        const grid = document.getElementById('grid');
+
+        products.forEach(product => {
+            const card = document.createElement('div');
+            card.className = 'product-card';
+            card.innerHTML = `
+                <img src="${product.img}" class="product-image" alt="${product.name}">
+                <div class="product-name">${product.name}</div>
+                <div class="product-price">${product.price}</div>
+                <button class="buy-button" onclick="selectProduct('${product.name}', '${product.price}')">Choisir</button>
+            `;
+            grid.appendChild(card);
         });
 
-        // Les produits triés du plus ancien au plus récent avec tes liens directs ImgBB
-        const products =
+        function selectProduct(name, price) {
+            // Afficher le bouton de commande lorsqu'un produit est sélectionné
+            commanderBtn.style.display = 'block';
+
+            // Gérer le clic sur le bouton de commande
+            commanderBtn.onclick = function() {
+                // Envoyer les données de la commande à Telegram
+                tg.sendData(JSON.stringify({
+                    product: name,
+                    price: price
+                }));
+                // Fermer l'application après la commande
+                tg.close();
+            };
+        }
+    </script>
+</body>
+</html>
