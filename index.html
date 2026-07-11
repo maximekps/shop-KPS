@@ -31,7 +31,7 @@
             overflow-x: hidden;
         }
 
-        /* --- SPLASH SCREEN AVEC LOGO INCUSTRE --- */
+        /* --- SPLASH SCREEN AVEC LOGO INCRUSTÉ --- */
         #splash-screen {
             position: fixed;
             top: 0;
@@ -62,7 +62,6 @@
             width: 100%;
             height: 100%;
             object-fit: contain;
-            /* Effet fondu dans la masse */
             mix-blend-mode: screen;
             opacity: 0.9;
             filter: drop-shadow(0 0 20px rgba(0, 240, 255, 0.4));
@@ -404,10 +403,8 @@
 </head>
 <body>
 
-    <!-- ÉCRAN DE CHARGEMENT -->
     <div id="splash-screen">
         <div class="splash-logo-container">
-            <!-- Image de la cagoule correctement intégrée et fondue -->
             <img src="https://i.ibb.co/60Kf4nHR/image.png" class="splash-logo-img" alt="KPS Logo">
         </div>
         <div class="loading-wrapper">
@@ -421,7 +418,6 @@
         </div>
     </div>
 
-    <!-- SITE PRINCIPAL -->
     <div id="main-content">
         <header>
             <h1>K P S</h1>
@@ -439,7 +435,6 @@
         <div class="products-grid" id="grid"></div>
     </div>
 
-    <!-- FENÊTRE DE COMMANDE -->
     <div class="modal-overlay" id="orderModal">
         <div class="modal-box">
             <div class="modal-header">
@@ -476,17 +471,17 @@
 
         let selectedProduct = {};
 
-        // Base de données exacte des 12 produits demandés avec visuels HD fonctionnels sur Telegram
+        // Base de données exacte des 12 modèles avec images réelles adaptées et fonctionnelles
         const products = [
             { id: 1, name: "iPhone 14 Pro / Max", price: "110€", img: "https://images.unsplash.com/photo-1678685888221-cda773a3dcdb?w=400&auto=format&fit=crop&q=80" },
             { id: 2, name: "iPhone 15 / Plus", price: "130€", img: "https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=400&auto=format&fit=crop&q=80" },
             { id: 3, name: "iPhone 15 Pro / Max", price: "150€", img: "https://images.unsplash.com/photo-1695048133044-8d4512e06f15?w=400&auto=format&fit=crop&q=80" },
             { id: 4, name: "iPhone 16 / Plus", price: "230€", img: "https://images.unsplash.com/photo-1726837021415-325b7b9ca8cc?w=400&auto=format&fit=crop&q=80" },
             { id: 5, name: "iPhone 16 Pro / Max", price: "250€", img: "https://images.unsplash.com/photo-1727376378453-27c9201bd27d?w=400&auto=format&fit=crop&q=80" },
-            { id: 6, name: "iPhone 17 Air", price: "200€", img: "https://images.unsplash.com/photo-1616348436168-de43ad0db179?w=400&auto=format&fit=crop&q=80" },
-            { id: 7, name: "iPhone 17", price: "270€", img: "https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?w=400&auto=format&fit=crop&q=80" },
-            { id: 8, name: "iPhone 17 Pro", price: "320€", img: "https://images.unsplash.com/photo-1592899677977-9c10ca588bbd?w=400&auto=format&fit=crop&q=80" },
-            { id: 9, name: "iPhone 17 Pro Max", price: "350€", img: "https://images.unsplash.com/photo-1573148195900-7845dcb9b127?w=400&auto=format&fit=crop&q=80" },
+            { id: 6, name: "iPhone 17 Air", price: "200€", img: "https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?w=400&auto=format&fit=crop&q=80" },
+            { id: 7, name: "iPhone 17", price: "270€", img: "https://images.unsplash.com/photo-1592899677977-9c10ca588bbd?w=400&auto=format&fit=crop&q=80" },
+            { id: 8, name: "iPhone 17 Pro", price: "320€", img: "https://images.unsplash.com/photo-1580910051074-3eb694886505?w=400&auto=format&fit=crop&q=80" },
+            { id: 9, name: "iPhone 17 Pro Max", price: "350€", img: "https://images.unsplash.com/photo-1565630916779-e303be97b6f5?w=400&auto=format&fit=crop&q=80" },
             { id: 10, name: "MacBook Pro M3 14\"", price: "330€", img: "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=400&auto=format&fit=crop&q=80" },
             { id: 11, name: "MacBook Neo Base", price: "150€", img: "https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?w=400&auto=format&fit=crop&q=80" },
             { id: 12, name: "MacBook Neo Supérieur", price: "180€", img: "https://images.unsplash.com/photo-1525547719571-a2d4ac8945e2?w=400&auto=format&fit=crop&q=80" }
@@ -515,7 +510,6 @@
         }
 
         function closeModal() {
-            document.getElementById('orderModal').classList.remove('remove');
             document.getElementById('orderModal').classList.remove('active');
         }
 
