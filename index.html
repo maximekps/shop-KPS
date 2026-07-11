@@ -1,41 +1,142 @@
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Boutique KPS</title>
+    <title>KPS Premium Shop</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
-        body { font-family: Arial, sans-serif; background-color: #f4f4f9; margin: 0; padding: 20px; text-align: center; color: #333; }
-        h1 { color: #2481cc; }
-        .container { max-width: 400px; margin: 0 auto; background: white; padding: 20px; border-radius: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-        .product { border: 1px solid #ddd; padding: 15px; border-radius: 10px; margin-top: 15px; background: #fff; }
-        button { background-color: #2481cc; color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-size: 16px; margin-top: 10px; width: 100%; }
-        button:hover { background-color: #1a66a3; }
+        :root {
+            --bg-color: #0a0a0c;
+            --card-bg: #16161a;
+            --accent-color: #007aff;
+            --text-main: #ffffff;
+            --text-muted: #a1a1a6;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            background: radial-gradient(circle at top, #1c1c21 0%, #0a0a0c 100%);
+            color: var(--text-main);
+            margin: 0;
+            padding: 20px;
+            padding-bottom: 100px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-top: 10px;
+        }
+
+        header h1 {
+            font-size: 24px;
+            margin: 0;
+            letter-spacing: 1px;
+            background: linear-gradient(to bottom, #fff 0%, #888 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        header p {
+            color: var(--text-muted);
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .product-card {
+            background: var(--card-bg);
+            border-radius: 18px;
+            padding: 15px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: transform 0.2s;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .product-card:active {
+            transform: scale(0.95);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .product-image {
+            width: 100%;
+            aspect-ratio: 1/1;
+            border-radius: 12px;
+            margin-bottom: 12px;
+            object-fit: cover;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background-color: #111;
+        }
+
+        .product-name {
+            font-size: 13px;
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: var(--text-main);
+            min-height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .product-price {
+            font-size: 16px;
+            font-weight: 700;
+            color: #fff;
+            text-shadow: 0 0 10px rgba(255,255,255,0.3);
+            margin-bottom: 12px;
+        }
+
+        .buy-button {
+            background-color: var(--text-main);
+            color: #000;
+            border: none;
+            padding: 8px;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 13px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        @keyframes glow {
+            0% { border-color: rgba(255,255,255,0.05); }
+            50% { border-color: rgba(255,255,255,0.2); }
+            100% { border-color: rgba(255,255,255,0.05); }
+        }
+
+        .product-card {
+            animation: glow 3s infinite;
+        }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <h1>Boutique KPS 🛒</h1>
-        <p>Bienvenue dans ton application Telegram !</p>
-        
-        <div class="product">
-            <h3>Produit Exemple #1</h3>
-            <p>Prix : 10,00 €</p>
-            <button onclick="acheter()">Acheter maintenant</button>
-        </div>
-    </div>
+    <header>
+        <h1>SHOP KPS PREMIUM</h1>
+        <p>Service de Refund Qualité</p>
+    </header>
+
+    <div class="products-grid" id="grid"></div>
 
     <script>
-        // Initialise le bouton principal de Telegram
         const tg = window.Telegram.WebApp;
-        tg.expand(); // Ouvre l'app en grand écran
+        tg.expand();
+        tg.MainButton.setText("COMMANDER SUR TELEGRAM");
+        tg.MainButton.setParams({
+            button_color: "#ffffff",
+            text_color: "#000000"
+        });
 
-        function acheter() {
-            tg.showAlert("Merci pour ton clic ! Ton système de boutique commence ici.");
-        }
-    </script>
-</body>
-</html>
+        // Les produits triés du plus ancien au plus récent avec tes liens directs ImgBB
+        const products =
