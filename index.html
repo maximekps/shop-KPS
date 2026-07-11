@@ -12,8 +12,8 @@
         :root {
             --bg-color: #050508;
             --card-bg: rgba(26, 15, 18, 0.95);
-            --accent-red: #ff003c; /* Rouge Vif Fluo Principal */
-            --accent-red-glow: rgba(255, 0, 60, 0.4);
+            --accent-red: #ff003c; 
+            --accent-red-glow: rgba(255, 0, 60, 0.5);
             --text-main: #ffffff;
             --text-muted: #a3a3a3;
         }
@@ -25,147 +25,148 @@
             background-color: var(--bg-color);
             background: radial-gradient(circle at top, #2e1015 0%, #050508 100%);
             color: var(--text-main);
-            margin: 0;
-            padding: 0;
+            margin: 0; padding: 0;
             overflow-x: hidden;
         }
 
-        /* --- ÉCRAN DE CHARGEMENT --- */
+        /* --- SPLASH SCREEN --- */
         #splash-screen {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
             background: #000;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
             z-index: 9999;
-            transition: opacity 0.6s ease, visibility 0.6s;
+            transition: opacity 0.5s ease, visibility 0.5s;
+        }
+
+        .splash-title {
+            font-size: 26px; font-weight: 900; letter-spacing: 6px;
+            color: var(--text-main); margin-bottom: 20px; text-transform: uppercase;
+            text-shadow: 0 0 15px var(--accent-red-glow);
         }
 
         .splash-logo-container {
-            width: 220px; height: 220px; margin-bottom: 20px;
+            width: 220px; height: 220px; margin-bottom: 25px;
             display: flex; align-items: center; justify-content: center;
         }
 
         .splash-logo-img {
             width: 100%; height: 100%; object-fit: contain;
-            mix-blend-mode: screen; /* Fusion parfaite dans la masse */
-            filter: drop-shadow(0 0 15px var(--accent-red-glow));
-            animation: pulse 2s infinite alternate;
+            mix-blend-mode: screen;
+            filter: drop-shadow(0 0 20px var(--accent-red-glow));
+            animation: pulse 1.8s infinite alternate;
         }
 
         @keyframes pulse {
-            0% { transform: scale(0.95); opacity: 0.8; }
-            100% { transform: scale(1.05); opacity: 1; filter: drop-shadow(0 0 30px var(--accent-red)); }
+            0% { transform: scale(0.96); opacity: 0.8; }
+            100% { transform: scale(1.04); opacity: 1; filter: drop-shadow(0 0 35px var(--accent-red)); }
         }
 
         .loading-bar-container {
-            width: 70%; max-width: 250px; height: 4px;
+            width: 70%; max-width: 250px; height: 5px;
             background: rgba(255,255,255,0.05); border-radius: 10px;
-            overflow: hidden; margin-top: 20px;
+            overflow: hidden; margin-top: 15px;
         }
 
         .loading-bar-fill {
             width: 0%; height: 100%;
             background: linear-gradient(90deg, #bb0024, var(--accent-red));
             box-shadow: 0 0 15px var(--accent-red);
-            transition: width 0.1s linear;
         }
 
         #loading-pct {
             font-size: 14px; font-weight: 700; margin-top: 10px; color: var(--accent-red);
-            letter-spacing: 2px;
-            text-shadow: 0 0 8px var(--accent-red-glow);
+            letter-spacing: 2px; text-shadow: 0 0 8px var(--accent-red-glow);
         }
 
-        /* --- CONTENU PRINCIPAL --- */
+        /* --- INTERFACE PRINCIPALE --- */
         #main-content {
             opacity: 0; transform: translateY(20px);
-            transition: all 0.8s cubic-bezier(0.2, 1, 0.3, 1);
-            padding: 20px;
+            transition: all 0.6s cubic-bezier(0.2, 1, 0.3, 1);
+            padding: 20px; padding-bottom: 40px;
         }
 
-        header { text-align: center; margin-bottom: 30px; }
-        header h1 { font-size: 38px; font-weight: 900; letter-spacing: 5px; margin: 0; text-transform: uppercase; text-shadow: 0 0 15px var(--accent-red-glow); }
-        header p { color: var(--accent-red); font-size: 12px; letter-spacing: 3px; font-weight: 700; text-transform: uppercase; }
+        header { text-align: center; margin-bottom: 25px; }
+        header h1 { font-size: 40px; font-weight: 900; letter-spacing: 6px; margin: 0; text-transform: uppercase; text-shadow: 0 0 15px var(--accent-red-glow); }
+        header p { color: var(--accent-red); font-size: 11px; letter-spacing: 4px; font-weight: 700; text-transform: uppercase; margin-top: 5px; }
 
-        .nav-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 30px; }
+        .nav-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 25px; }
         .nav-item { 
             background: var(--card-bg); border: 1px solid rgba(255,0,60,0.15);
-            border-radius: 15px; padding: 15px 5px; text-align: center;
-            font-size: 10px; font-weight: 700; text-transform: uppercase;
-            transition: all 0.2s;
+            border-radius: 15px; padding: 14px 5px; text-align: center;
+            font-size: 14px; cursor: pointer; transition: all 0.2s;
         }
-        .nav-item:active {
-            border-color: var(--accent-red);
-            background: rgba(255, 0, 60, 0.1);
-        }
+        .nav-item:active { background: rgba(255, 0, 60, 0.2); transform: scale(0.93); }
 
         .product-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
         .product-card {
-            background: var(--card-bg); border-radius: 20px; padding: 12px;
+            background: var(--card-bg); border-radius: 22px; padding: 12px;
             border: 1px solid rgba(255,255,255,0.03);
             display: flex; flex-direction: column; justify-content: space-between;
-            transition: transform 0.2s;
+            transition: transform 0.2s, border-color 0.2s;
         }
-        .product-card:active { transform: scale(0.96); border-color: var(--accent-red); box-shadow: 0 0 15px rgba(255, 0, 60, 0.2); }
+        .product-card:active { transform: scale(0.96); border-color: var(--accent-red); }
 
         .img-box { 
-            width: 100%; aspect-ratio: 1/1; border-radius: 15px; 
-            background: #000; overflow: hidden; margin-bottom: 10px;
+            width: 100%; aspect-ratio: 1/1; border-radius: 16px; 
+            background: linear-gradient(135deg, #1f1215 0%, #050508 100%); 
+            overflow: hidden; margin-bottom: 12px;
             border: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex; align-items: center; justify-content: center;
         }
         .img-box img { width: 100%; height: 100%; object-fit: cover; }
 
-        .p-name { font-size: 12px; font-weight: 700; height: 32px; display: flex; align-items: center; justify-content: center; text-align: center; }
-        .p-price { font-size: 18px; font-weight: 900; color: #ffffff; margin: 8px 0; text-shadow: 0 0 10px rgba(255, 255, 255, 0.2); }
+        .p-name { font-size: 13px; font-weight: 700; height: 34px; display: flex; align-items: center; justify-content: center; text-align: center; line-height: 1.2; }
+        .p-price { font-size: 19px; font-weight: 900; color: #ffffff; margin: 6px 0; text-align: center; }
         
         .btn-order {
             background: linear-gradient(135deg, var(--accent-red), #990024);
-            color: #fff; border: none; border-radius: 12px; padding: 12px;
+            color: #fff; border: none; border-radius: 14px; padding: 12px;
             font-weight: 800; font-size: 11px; text-transform: uppercase;
-            box-shadow: 0 4px 12px rgba(255, 0, 60, 0.4);
-            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(255, 0, 60, 0.3); width: 100%; cursor: pointer;
         }
 
-        /* --- MODAL FORMULAIRE --- */
+        /* --- FENÊTRES MODALES --- */
         .modal-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.9); backdrop-filter: blur(15px);
+            background: rgba(0,0,0,0.85); backdrop-filter: blur(10px);
             display: none; align-items: flex-end; z-index: 10000;
         }
         .modal-content {
-            width: 100%; background: #140d0f; border-radius: 30px 30px 0 0;
+            width: 100%; background: #120b0d; border-radius: 30px 30px 0 0;
             padding: 30px; border-top: 3px solid var(--accent-red);
-            animation: slideUp 0.4s ease-out;
+            animation: slideUp 0.3s cubic-bezier(0.1, 1, 0.1, 1);
         }
         @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
 
-        .form-group { margin-bottom: 15px; }
-        .form-group label { display: block; font-size: 10px; color: var(--text-muted); text-transform: uppercase; margin-bottom: 5px; font-weight: 700; }
+        .form-group { margin-bottom: 16px; }
+        .form-group label { display: block; font-size: 10px; color: var(--text-muted); text-transform: uppercase; margin-bottom: 6px; font-weight: 700; letter-spacing: 1px; }
         .form-group input { 
-            width: 100%; background: #1a1415; border: 1px solid #332225; 
-            border-radius: 12px; padding: 15px; color: #fff; outline: none;
+            width: 100%; background: #181113; border: 1px solid #332023; 
+            border-radius: 12px; padding: 16px; color: #fff; outline: none; font-size: 14px;
         }
-        .form-group input:focus { border-color: var(--accent-red); box-shadow: 0 0 8px rgba(255, 0, 60, 0.2); }
+        .form-group input:focus { border-color: var(--accent-red); }
 
         .btn-confirm {
             background: linear-gradient(135deg, var(--accent-red), #c8002e);
-            color: #fff; width: 100%;
-            padding: 18px; border-radius: 15px; font-weight: 900; border: none;
-            text-transform: uppercase; margin-top: 10px;
-            box-shadow: 0 4px 15px rgba(255, 0, 60, 0.4);
+            color: #fff; width: 100%; padding: 18px; border-radius: 16px; font-weight: 900; border: none;
+            text-transform: uppercase; margin-top: 10px; box-shadow: 0 4px 15px rgba(255, 0, 60, 0.4);
         }
     </style>
 </head>
 <body>
 
+    <!-- CHARGEMENT SOUHAITÉ -->
     <div id="splash-screen">
+        <div class="splash-title">MAXIME KPS</div>
         <div class="splash-logo-container">
-            <img src="https://i.ibb.co/60Kf4nHR/image.png" class="splash-logo-img">
+            <img src="https://i.ibb.co/XxfPrLWh/image.png" class="splash-logo-img">
         </div>
         <div class="loading-bar-container"><div class="loading-bar-fill" id="bar"></div></div>
         <div id="loading-pct">0%</div>
     </div>
 
+    <!-- INTERFACE -->
     <div id="main-content">
         <header>
             <h1>K P S</h1>
@@ -173,27 +174,43 @@
         </header>
 
         <div class="nav-grid">
-            <div class="nav-item">💬</div>
-            <div class="nav-item">⭐</div>
-            <div class="nav-item">👤</div>
-            <div class="nav-item">📢</div>
+            <div class="nav-item" onclick="navTo('https://t.me/maxime_kps3')">💬</div>
+            <div class="nav-item" onclick="openReviews()">⭐</div>
+            <div class="nav-item" onclick="alert('Profil synchronisé avec Telegram.')">👤</div>
+            <div class="nav-item" onclick="navTo('https://t.me/maxime_kps3')">📢</div>
         </div>
 
         <div class="product-grid" id="grid"></div>
     </div>
 
+    <!-- MODAL DE COMMANDE -->
     <div class="modal-overlay" id="modal">
         <div class="modal-content">
             <div style="text-align:center; margin-bottom:20px;">
-                <h2 id="m-title" style="margin:0;">Produit</h2>
-                <span id="m-price" style="color:var(--accent-red); font-weight:900; font-size: 22px;">0€</span>
+                <h2 id="m-title" style="margin:0; font-size: 24px;">Produit</h2>
+                <span id="m-price" style="color:var(--accent-red); font-weight:900; font-size: 24px;">0€</span>
             </div>
-            <div class="form-group"><label>Nom</label><input type="text" id="nom"></div>
-            <div class="form-group"><label>Prénom</label><input type="text" id="prenom"></div>
-            <div class="form-group"><label>Email</label><input type="email" id="mail"></div>
-            <div class="form-group"><label>Adresse de livraison</label><input type="text" id="adresse"></div>
+            <div class="form-group"><label>Nom</label><input type="text" id="nom" placeholder="Votre nom"></div>
+            <div class="form-group"><label>Prénom</label><input type="text" id="prenom" placeholder="Votre prénom"></div>
+            <div class="form-group"><label>Email</label><input type="email" id="mail" placeholder="votre@email.com"></div>
+            <div class="form-group"><label>Adresse de livraison</label><input type="text" id="adresse" placeholder="Adresse complète, Ville, CP"></div>
             <button class="btn-confirm" onclick="finish()">🔥 Valider la commande</button>
-            <button style="background:none; border:none; color:#777; width:100%; margin-top:15px; font-weight: 700;" onclick="closeM()">Annuler</button>
+        </div>
+    </div>
+
+    <!-- MODAL AVIS -->
+    <div class="modal-overlay" id="reviewModal">
+        <div class="modal-content" style="text-align:center;">
+            <h2>Avis Clients ⭐</h2>
+            <div style="background:#1c1214; padding:15px; border-radius:12px; text-align:left; margin-bottom:10px;">
+                <b style="color:var(--accent-red);">@Lukas_d</b> <span style="color:#ffcc00;">⭐⭐⭐⭐⭐</span>
+                <p style="margin:5px 0 0 0; font-size:13px; color:var(--text-muted);">Reçu l'iPhone 16 Pro Max en 4 jours. Produit parfait, rien à dire merci Maxime.</p>
+            </div>
+            <div style="background:#1c1214; padding:15px; border-radius:12px; text-align:left; margin-bottom:20px;">
+                <b style="color:var(--accent-red);">@Sacha_vlc</b> <span style="color:#ffcc00;">⭐⭐⭐⭐⭐</span>
+                <p style="margin:5px 0 0 0; font-size:13px; color:var(--text-muted);">MacBook Pro bien arrivé, emballage ultra sécurisé. KPS c'est du sérieux.</p>
+            </div>
+            <button class="btn-confirm" onclick="closeReviews()">Fermer</button>
         </div>
     </div>
 
@@ -202,74 +219,94 @@
         tg.expand();
 
         const products = [
-            { name: "iPhone 14 Pro Max", price: "110€", img: "https://images.unsplash.com/photo-1663499482523-1c0c1bae4ce1?w=400&q=80" },
-            { name: "iPhone 15 Plus", price: "130€", img: "https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=400&q=80" },
-            { name: "iPhone 15 Pro Max", price: "150€", img: "https://images.unsplash.com/photo-1695048133044-8d4512e06f15?w=400&q=80" },
-            { name: "iPhone 16 Plus", price: "230€", img: "https://images.unsplash.com/photo-1726837021415-325b7b9ca8cc?w=400&q=80" },
-            { name: "iPhone 16 Pro Max", price: "250€", img: "https://images.unsplash.com/photo-1727376378453-27c9201bd27d?w=400&q=80" },
-            { name: "iPhone 17 Air", price: "200€", img: "https://images.unsplash.com/photo-1616348436168-de43ad0db179?w=400&q=80" },
-            { name: "iPhone 17", price: "270€", img: "https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?w=400&q=80" },
-            { name: "iPhone 17 Pro", price: "320€", img: "https://images.unsplash.com/photo-1592899677977-9c10ca588bbd?w=400&q=80" },
-            { name: "iPhone 17 Pro Max", price: "350€", img: "https://images.unsplash.com/photo-1573148195900-7845dcb9b127?w=400&q=80" },
-            { name: "MacBook Pro M3", price: "330€", img: "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=400&q=80" },
-            { name: "MacBook Neo Base", price: "150€", img: "https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?w=400&q=80" },
-            { name: "MacBook Neo Sup.", price: "180€", img: "https://images.unsplash.com/photo-1525547719571-a2d4ac8945e2?w=400&q=80" }
+            { name: "iPhone 14 Pro Max", price: "110€", label: "IPHONE 14 PM" },
+            { name: "iPhone 15 Plus", price: "130€", label: "IPHONE 15 PLUS" },
+            { name: "iPhone 15 Pro Max", price: "150€", label: "IPHONE 15 PM" },
+            { name: "iPhone 16 Plus", price: "230€", label: "IPHONE 16 PLUS" },
+            { name: "iPhone 16 Pro Max", price: "250€", label: "IPHONE 16 PM" },
+            { name: "iPhone 17 Air", price: "200€", label: "IPHONE 17 AIR" },
+            { name: "iPhone 17", price: "270€", label: "IPHONE 17" },
+            { name: "iPhone 17 Pro", price: "320€", label: "IPHONE 17 PRO" },
+            { name: "iPhone 17 Pro Max", price: "350€", label: "IPHONE 17 PM" },
+            { name: "MacBook Pro M3", price: "330€", label: "MACBOOK M3" },
+            { name: "MacBook Neo Base", price: "150€", label: "MAC NEO BASE" },
+            { name: "MacBook Neo Sup.", price: "180€", label: "MAC NEO SUP" }
         ];
 
         const grid = document.getElementById('grid');
         products.forEach(p => {
             const card = document.createElement('div');
             card.className = 'product-card';
-            card.innerHTML = `<div class="img-box"><img src="${p.img}"></div>
+            card.innerHTML = `<div class="img-box">
+                                <span style="font-weight:900; font-size:11px; color:var(--accent-red); letter-spacing:1px;">${p.label}</span>
+                             </div>
                              <div class="p-name">${p.name}</div>
                              <div class="p-price">${p.price}</div>
                              <button class="btn-order" onclick="openM('${p.name}', '${p.price}')">Commander</button>`;
             grid.appendChild(card);
         });
 
-        let currentP = "";
-        let currentPr = "";
+        let currentP = ""; let currentPr = "";
 
         function openM(n, p) {
+            if(tg.HapticFeedback) tg.HapticFeedback.impactOccurred('medium');
             currentP = n; currentPr = p;
             document.getElementById('m-title').innerText = n;
             document.getElementById('m-price').innerText = p;
             document.getElementById('modal').style.display = 'flex';
+            
+            tg.BackButton.show();
+            tg.BackButton.onClick(closeM);
         }
 
-        function closeM() { document.getElementById('modal').style.display = 'none'; }
+        function closeM() {
+            document.getElementById('modal').style.display = 'none';
+            tg.BackButton.hide();
+        }
+
+        function openReviews() {
+            if(tg.HapticFeedback) tg.HapticFeedback.impactOccurred('light');
+            document.getElementById('reviewModal').style.display = 'flex';
+        }
+        function closeReviews() { document.getElementById('reviewModal').style.display = 'none'; }
+        function navTo(url) { if(tg.HapticFeedback) tg.HapticFeedback.impactOccurred('light'); window.location.href = url; }
 
         function finish() {
-            const n = document.getElementById('nom').value;
-            const pr = document.getElementById('prenom').value;
-            const m = document.getElementById('mail').value;
-            const a = document.getElementById('adresse').value;
+            const n = document.getElementById('nom').value.trim();
+            const pr = document.getElementById('prenom').value.trim();
+            const m = document.getElementById('mail').value.trim();
+            const a = document.getElementById('adresse').value.trim();
             
-            if(!n || !pr || !m || !a) { alert("Remplis tout !"); return; }
+            if(!n || !pr || !m || !a) { 
+                if(tg.HapticFeedback) tg.HapticFeedback.notificationOccurred('error');
+                alert("Merci de remplir tous les champs obligatoires."); 
+                return; 
+            }
 
+            if(tg.HapticFeedback) tg.HapticFeedback.notificationOccurred('success');
             const txt = `🛒 NOUVELLE COMMANDE KPS 🛒\n\nProduit: ${currentP}\nPrix: ${currentPr}\n\nClient: ${pr} ${n}\nEmail: ${m}\nAdresse: ${a}`;
             
             navigator.clipboard.writeText(txt).then(() => {
-                alert("Infos copiées ! Redirection vers @maxime_kps3...");
+                alert("Détails copiés ! Envoi de votre demande vers @maxime_kps3.");
                 window.location.href = "https://t.me/maxime_kps3";
             });
         }
 
-        let p = 0;
+        let pct = 0;
         const i = setInterval(() => {
-            p += Math.floor(Math.random() * 5) + 2;
-            if(p >= 100) {
-                p = 100; clearInterval(i);
+            pct += Math.floor(Math.random() * 6) + 3;
+            if(pct >= 100) {
+                pct = 100; clearInterval(i);
                 setTimeout(() => {
                     document.getElementById('splash-screen').style.opacity = '0';
                     document.getElementById('splash-screen').style.visibility = 'hidden';
                     document.getElementById('main-content').style.opacity = '1';
                     document.getElementById('main-content').style.transform = 'translateY(0)';
-                }, 500);
+                }, 400);
             }
-            document.getElementById('bar').style.width = p + '%';
-            document.getElementById('loading-pct').innerText = p + '%';
-        }, 80);
+            document.getElementById('bar').style.width = pct + '%';
+            document.getElementById('loading-pct').innerText = pct + '%';
+        }, 60);
     </script>
 </body>
 </html>
