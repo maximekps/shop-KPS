@@ -7,13 +7,13 @@
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         :root {
-            --bg-color: #050507;
-            --card-bg: rgba(18, 18, 24, 0.85);
-            --accent-neon: #ff2a2a; 
-            --accent-glow: rgba(255, 42, 42, 0.15);
+            --bg-color: #0b0c10;
+            --card-bg: rgba(26, 26, 36, 0.9);
+            --accent-neon: #00f0ff; /* Bleu Cyan Ultra Lumineux */
+            --btn-neon: #ff003c; /* Rouge Vif Fluo */
             --text-main: #ffffff;
-            --text-muted: #747480;
-            --border-neon: rgba(255, 255, 255, 0.08);
+            --text-muted: #a3a3a3;
+            --border-neon: rgba(0, 240, 255, 0.2);
         }
 
         * {
@@ -22,23 +22,24 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             background-color: var(--bg-color);
-            background: radial-gradient(circle at top, #1a0808 0%, #050507 100%);
+            background: radial-gradient(circle at top, #1f1f2e 0%, #0b0c10 100%);
             color: var(--text-main);
             margin: 0;
             padding: 0;
             overflow-x: hidden;
         }
 
-        /* --- ÉCRAN DE CHARGEMENT --- */
+        /* --- SPLASH SCREEN AVEC LOGO INCUSTRE --- */
         #splash-screen {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: radial-gradient(circle at center, #1c0a0a 0%, #000000 100%);
+            background: #050508;
+            background: radial-gradient(circle at center, #151622 0%, #050508 100%);
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -47,17 +48,30 @@
             transition: opacity 0.5s ease, visibility 0.5s;
         }
 
-        .splash-logo-img {
-            width: 160px;
-            height: auto;
-            margin-bottom: 40px;
-            filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.2));
-            animation: pulse 2s infinite alternate;
+        .splash-logo-container {
+            position: relative;
+            width: 180px;
+            height: 180px;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        @keyframes pulse {
-            0% { transform: scale(1); filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.2)); }
-            100% { transform: scale(1.05); filter: drop-shadow(0 0 25px var(--accent-neon)); }
+        .splash-logo-img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            /* Effet fondu dans la masse */
+            mix-blend-mode: screen;
+            opacity: 0.9;
+            filter: drop-shadow(0 0 20px rgba(0, 240, 255, 0.4));
+            animation: pulse-glow 2s infinite alternate;
+        }
+
+        @keyframes pulse-glow {
+            0% { transform: scale(0.98); filter: drop-shadow(0 0 15px rgba(0, 240, 255, 0.3)); }
+            100% { transform: scale(1.03); filter: drop-shadow(0 0 30px var(--accent-neon)); }
         }
 
         .loading-wrapper {
@@ -68,7 +82,7 @@
         .loading-info {
             display: flex;
             justify-content: space-between;
-            font-size: 11px;
+            font-size: 12px;
             color: var(--text-muted);
             text-transform: uppercase;
             letter-spacing: 2px;
@@ -78,25 +92,27 @@
         #loading-text {
             color: var(--accent-neon);
             font-weight: bold;
+            text-shadow: 0 0 8px rgba(0, 240, 255, 0.6);
         }
 
         .progress-container {
             width: 100%;
-            height: 3px;
+            height: 4px;
             background: rgba(255, 255, 255, 0.05);
             border-radius: 10px;
             overflow: hidden;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.5);
         }
 
         .progress-bar {
             width: 0%;
             height: 100%;
-            background: linear-gradient(90deg, #ff2a2a, #ffffff);
-            box-shadow: 0 0 8px var(--accent-neon);
+            background: linear-gradient(90deg, #ff003c, #00f0ff);
+            box-shadow: 0 0 10px var(--accent-neon);
             transition: width 0.1s linear;
         }
 
-        /* --- SITE PRINCIPAL --- */
+        /* --- INTERFACE PRINCIPALE --- */
         #main-content {
             opacity: 0;
             transform: translateY(15px);
@@ -112,24 +128,22 @@
         }
 
         header h1 {
-            font-size: 28px;
+            font-size: 32px;
             font-weight: 900;
             margin: 0;
-            letter-spacing: 4px;
+            letter-spacing: 3px;
             text-transform: uppercase;
-            background: linear-gradient(to bottom, #ffffff 60%, #555555 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: #ffffff;
+            text-shadow: 0 0 15px rgba(0, 240, 255, 0.5);
         }
 
         header p {
             color: var(--accent-neon);
-            font-size: 11px;
+            font-size: 12px;
             margin-top: 6px;
             text-transform: uppercase;
-            letter-spacing: 3px;
-            font-weight: 600;
-            opacity: 0.8;
+            letter-spacing: 4px;
+            font-weight: 700;
         }
 
         .quick-nav {
@@ -145,9 +159,8 @@
             border-radius: 12px;
             padding: 12px 4px;
             text-align: center;
-            font-size: 9px;
+            font-size: 10px;
             font-weight: 700;
-            letter-spacing: 1px;
             text-transform: uppercase;
             color: var(--text-main);
             display: flex;
@@ -155,60 +168,64 @@
             align-items: center;
             gap: 6px;
             transition: all 0.2s;
+            box-shadow: 0 0 10px rgba(0, 240, 255, 0.05);
         }
 
         .nav-item:active {
             border-color: var(--accent-neon);
-            background: rgba(255, 42, 42, 0.05);
+            background: rgba(0, 240, 255, 0.1);
             transform: scale(0.95);
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.2);
         }
 
         .nav-icon {
-            font-size: 16px;
-            color: var(--accent-neon);
+            font-size: 18px;
         }
 
         .section-title {
-            font-size: 12px;
+            font-size: 13px;
             font-weight: 800;
             letter-spacing: 2px;
             text-transform: uppercase;
             margin-bottom: 15px;
-            padding-left: 6px;
+            padding-left: 8px;
             border-left: 3px solid var(--accent-neon);
             color: #ffffff;
+            text-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
         }
 
+        /* GRILLE DE 12 PRODUITS */
         .products-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
+            gap: 14px;
         }
 
         .product-card {
             background: var(--card-bg);
-            border-radius: 16px;
+            border-radius: 18px;
             padding: 12px;
             text-align: center;
-            border: 1px solid var(--border-neon);
+            border: 1px solid rgba(255, 255, 255, 0.05);
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
-            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+            transition: all 0.2s ease;
         }
 
         .product-card:active {
             transform: scale(0.97);
             border-color: var(--accent-neon);
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.2);
         }
 
         .product-image-container {
             width: 100%;
             aspect-ratio: 1 / 1;
-            border-radius: 10px;
+            border-radius: 12px;
             overflow: hidden;
-            background: #09090b;
+            background: #14141f;
             margin-bottom: 10px;
             border: 1px solid rgba(255, 255, 255, 0.03);
         }
@@ -223,7 +240,7 @@
             font-size: 12px;
             font-weight: 700;
             color: var(--text-main);
-            margin-bottom: 4px;
+            margin-bottom: 6px;
             min-height: 32px;
             display: flex;
             align-items: center;
@@ -234,35 +251,42 @@
         .product-price {
             font-size: 18px;
             font-weight: 800;
-            color: #ffffff;
-            margin-bottom: 10px;
+            color: var(--accent-neon);
+            margin-bottom: 12px;
             letter-spacing: 0.5px;
+            text-shadow: 0 0 10px rgba(0, 240, 255, 0.2);
         }
 
         .buy-button {
-            background: linear-gradient(135deg, #ff2a2a 0%, #b30000 100%);
+            background: linear-gradient(135deg, #ff003c 0%, #990024 100%);
             color: #ffffff;
             border: none;
-            padding: 10px;
-            border-radius: 10px;
-            font-weight: 700;
+            padding: 12px;
+            border-radius: 12px;
+            font-weight: 800;
             font-size: 11px;
             text-transform: uppercase;
             letter-spacing: 1px;
             cursor: pointer;
             width: 100%;
-            box-shadow: 0 2px 8px rgba(255, 42, 42, 0.2);
+            box-shadow: 0 4px 12px rgba(255, 0, 60, 0.3);
+            transition: all 0.2s;
         }
 
-        /* --- FENÊTRE CONTEXTUELLE DE COMMANDE (MODAL) --- */
+        .buy-button:active {
+            transform: scale(0.95);
+            box-shadow: 0 0 8px rgba(255, 0, 60, 0.6);
+        }
+
+        /* --- MODAL FORMULAIRE --- */
         .modal-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(8px);
+            background: rgba(3, 4, 6, 0.85);
+            backdrop-filter: blur(10px);
             z-index: 10000;
             display: flex;
             align-items: flex-end;
@@ -278,9 +302,9 @@
 
         .modal-box {
             width: 100%;
-            background: #0d0d11;
-            border-top: 2px solid var(--accent-neon);
-            border-radius: 24px 24px 0 0;
+            background: #111217;
+            border-top: 3px solid var(--accent-neon);
+            border-radius: 26px 26px 0 0;
             padding: 24px;
             max-height: 85vh;
             overflow-y: auto;
@@ -294,20 +318,21 @@
 
         .modal-header {
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 22px;
             position: relative;
         }
 
         .modal-badge {
-            background: rgba(255, 42, 42, 0.15);
+            background: rgba(0, 240, 255, 0.1);
             border: 1px solid var(--accent-neon);
-            color: #ffffff;
-            font-weight: bold;
-            padding: 6px 16px;
+            color: var(--accent-neon);
+            font-weight: 800;
+            padding: 6px 18px;
             border-radius: 20px;
             display: inline-block;
-            font-size: 14px;
-            margin-top: 5px;
+            font-size: 15px;
+            margin-top: 8px;
+            text-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
         }
 
         .close-btn {
@@ -317,21 +342,20 @@
             background: rgba(255, 255, 255, 0.05);
             border: none;
             color: #fff;
-            width: 30px;
-            height: 30px;
+            width: 32px;
+            height: 32px;
             border-radius: 50%;
             font-weight: bold;
             cursor: pointer;
         }
 
-        /* FORMULAIRE DESIGN PREMIUM */
         .form-group {
             margin-bottom: 16px;
         }
 
         .form-group label {
             display: block;
-            font-size: 10px;
+            font-size: 11px;
             font-weight: 800;
             text-transform: uppercase;
             letter-spacing: 1.5px;
@@ -348,28 +372,29 @@
             color: #fff;
             font-size: 14px;
             outline: none;
-            transition: border-color 0.2s;
+            transition: all 0.2s;
         }
 
         .form-group input:focus {
             border-color: var(--accent-neon);
-            background: rgba(255, 42, 42, 0.02);
+            background: rgba(0, 240, 255, 0.02);
+            box-shadow: 0 0 10px rgba(0, 240, 255, 0.1);
         }
 
         .submit-order-btn {
-            background: linear-gradient(135deg, #007aff 0%, #0056b3 100%);
-            color: white;
+            background: linear-gradient(135deg, #00f0ff 0%, #007780 100%);
+            color: #0b0c10;
             border: none;
             width: 100%;
             padding: 16px;
             border-radius: 14px;
-            font-weight: 700;
+            font-weight: 800;
             font-size: 14px;
             text-transform: uppercase;
             letter-spacing: 1px;
             margin-top: 10px;
             cursor: pointer;
-            box-shadow: 0 4px 15px rgba(0, 122, 255, 0.3);
+            box-shadow: 0 4px 15px rgba(0, 240, 255, 0.3);
         }
 
         .submit-order-btn:active {
@@ -381,10 +406,13 @@
 
     <!-- ÉCRAN DE CHARGEMENT -->
     <div id="splash-screen">
-        <img src="https://i.ibb.co/60Kf4nHR/image.png" class="splash-logo-img" alt="Logo Cagoule">
+        <div class="splash-logo-container">
+            <!-- Image de la cagoule correctement intégrée et fondue -->
+            <img src="https://i.ibb.co/60Kf4nHR/image.png" class="splash-logo-img" alt="KPS Logo">
+        </div>
         <div class="loading-wrapper">
             <div class="loading-info">
-                <span>Chargement</span>
+                <span>Initialisation</span>
                 <span id="loading-text">0%</span>
             </div>
             <div class="progress-container">
@@ -397,7 +425,7 @@
     <div id="main-content">
         <header>
             <h1>K P S</h1>
-            <p>Création & Service Premium</p>
+            <p>Premium Store</p>
         </header>
 
         <div class="quick-nav">
@@ -407,35 +435,34 @@
             <div class="nav-item"><span class="nav-icon">📢</span>Canal</div>
         </div>
 
-        <div class="section-title">Nos Équipements</div>
+        <div class="section-title">Catalogue Exclusif</div>
         <div class="products-grid" id="grid"></div>
     </div>
 
-    <!-- FENÊTRE CONTEXTUELLE DE COMMANDE -->
+    <!-- FENÊTRE DE COMMANDE -->
     <div class="modal-overlay" id="orderModal">
         <div class="modal-box">
             <div class="modal-header">
                 <button class="close-btn" onclick="closeModal()">×</button>
-                <h2 id="modalProductName" style="margin:5px 0; font-size:20px;">Produit</h2>
+                <h2 id="modalProductName" style="margin:5px 0; font-size:22px; font-weight:800;">Produit</h2>
                 <div class="modal-badge" id="modalProductPrice">0€</div>
             </div>
             
-            <!-- Formulaire de Coordonnées -->
             <div class="form-group">
                 <label>Nom</label>
-                <input type="text" id="lastName" placeholder="Ex: Dupont">
+                <input type="text" id="lastName" placeholder="Votre nom">
             </div>
             <div class="form-group">
                 <label>Prénom</label>
-                <input type="text" id="firstName" placeholder="Ex: Jean">
+                <input type="text" id="firstName" placeholder="Votre prénom">
             </div>
             <div class="form-group">
                 <label>Adresse Mail</label>
-                <input type="email" id="email" placeholder="Ex: jean.dupont@gmail.com">
+                <input type="email" id="email" placeholder="Ex: contact@domaine.com">
             </div>
             <div class="form-group">
-                <label>Adresse Postale (Où tu habites)</label>
-                <input type="text" id="address" placeholder="Ex: 12 Rue des Oliviers, 75001 Paris">
+                <label>Adresse Postale (Lieu de résidence)</label>
+                <input type="text" id="address" placeholder="Adresse complète, Code postal, Ville">
             </div>
 
             <button class="submit-order-btn" onclick="sendOrder()">🛒 Confirmer la commande</button>
@@ -449,6 +476,7 @@
 
         let selectedProduct = {};
 
+        // Base de données exacte des 12 produits demandés avec visuels HD fonctionnels sur Telegram
         const products = [
             { id: 1, name: "iPhone 14 Pro / Max", price: "110€", img: "https://images.unsplash.com/photo-1678685888221-cda773a3dcdb?w=400&auto=format&fit=crop&q=80" },
             { id: 2, name: "iPhone 15 / Plus", price: "130€", img: "https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=400&auto=format&fit=crop&q=80" },
@@ -479,7 +507,6 @@
             grid.appendChild(card);
         });
 
-        // Fonctions d'ouverture et fermeture de la pop-up
         function openModal(name, price) {
             selectedProduct = { name, price };
             document.getElementById('modalProductName').innerText = name;
@@ -488,10 +515,10 @@
         }
 
         function closeModal() {
+            document.getElementById('orderModal').classList.remove('remove');
             document.getElementById('orderModal').classList.remove('active');
         }
 
-        // Système d'envoi et copie automatique du texte
         function sendOrder() {
             const nom = document.getElementById('lastName').value.trim();
             const prenom = document.getElementById('firstName').value.trim();
@@ -499,11 +526,10 @@
             const adresse = document.getElementById('address').value.trim();
 
             if(!nom || !prenom || !email || !adresse) {
-                alert("Remplis toutes les cases pour commander !");
+                alert("Veuillez remplir l'ensemble des champs pour valider.");
                 return;
             }
 
-            // Structuration du texte de la commande à envoyer
             const orderText = `📦 NOUVELLE COMMANDE KPS 📦\n\n` +
                               `🔹 Produit : ${selectedProduct.name}\n` +
                               `🔹 Prix : ${selectedProduct.price}\n\n` +
@@ -511,19 +537,15 @@
                               `📧 Email : ${email}\n` +
                               `📍 Adresse : ${adresse}`;
 
-            // Copie automatique dans le presse-papier
             navigator.clipboard.writeText(orderText).then(() => {
-                alert("Infos copiées ! Tu vas être redirigé vers @maxime_kps3. Colle juste le texte dans la discussion.");
-                
-                // Redirection directe vers ton profil Telegram
+                alert("Détails copiés ! Vous allez être redirigé vers @maxime_kps3. Collez simplement le texte dans le chat.");
                 window.location.href = "https://t.me/maxime_kps3";
             }).catch(err => {
-                // Secours si le navigateur bloque l'accès direct automatique
                 window.location.href = "https://t.me/maxime_kps3";
             });
         }
 
-        // Animation du Splash Screen
+        // Animation de progression du Splash Screen
         const splashScreen = document.getElementById('splash-screen');
         const progressBar = document.getElementById('progress-bar');
         const loadingText = document.getElementById('loading-text');
@@ -531,7 +553,7 @@
 
         let progress = 0;
         const interval = setInterval(() => {
-            progress += Math.floor(Math.random() * 6) + 2;
+            progress += Math.floor(Math.random() * 7) + 3;
             if (progress >= 100) {
                 progress = 100;
                 clearInterval(interval);
@@ -545,7 +567,7 @@
             }
             progressBar.style.width = `${progress}%`;
             loadingText.innerText = `${progress}%`;
-        }, 70);
+        }, 65);
     </script>
 </body>
 </html>
