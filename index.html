@@ -11,11 +11,11 @@
     <style>
         :root {
             --bg-color: #050508;
-            --card-bg: rgba(26, 15, 18, 0.95);
+            --card-bg: rgba(20, 11, 13, 0.95);
             --accent-red: #ff003c; 
-            --accent-red-glow: rgba(255, 0, 60, 0.5);
+            --accent-red-glow: rgba(255, 0, 60, 0.4);
             --text-main: #ffffff;
-            --text-muted: #a3a3a3;
+            --text-muted: #b5b5b5;
         }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -23,167 +23,206 @@
         body {
             font-family: 'Urbanist', sans-serif;
             background-color: var(--bg-color);
-            background: radial-gradient(circle at top, #2e1015 0%, #050508 100%);
+            background: radial-gradient(circle at top, #250b10 0%, #050508 100%);
             color: var(--text-main);
             margin: 0; padding: 0;
             overflow-x: hidden;
         }
 
-        /* --- SPLASH SCREEN --- */
+        /* --- INTERFACE DE CHARGEMENT NETTE --- */
         #splash-screen {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
             background: #000;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
             z-index: 9999;
-            transition: opacity 0.5s ease, visibility 0.5s;
+            transition: opacity 0.4s ease, visibility 0.4s;
         }
 
         .splash-title {
             font-size: 26px; font-weight: 900; letter-spacing: 6px;
-            color: var(--text-main); margin-bottom: 20px; text-transform: uppercase;
+            color: var(--text-main); margin-bottom: 25px; text-transform: uppercase;
             text-shadow: 0 0 15px var(--accent-red-glow);
         }
 
         .splash-logo-container {
-            width: 220px; height: 220px; margin-bottom: 25px;
+            width: 100%; max-width: 260px; height: auto; margin-bottom: 25px;
             display: flex; align-items: center; justify-content: center;
         }
 
         .splash-logo-img {
-            width: 100%; height: 100%; object-fit: contain;
-            mix-blend-mode: screen;
-            filter: drop-shadow(0 0 20px var(--accent-red-glow));
-            animation: pulse 1.8s infinite alternate;
+            width: 100%; height: auto; max-height: 260px;
+            object-fit: contain;
+            mix-blend-mode: screen; /* Fusion parfaite */
+            image-rendering: -webkit-optimize-contrast; /* Force la netteté sur mobile */
+            animation: glitchPulse 2s infinite alternate;
         }
 
-        @keyframes pulse {
-            0% { transform: scale(0.96); opacity: 0.8; }
-            100% { transform: scale(1.04); opacity: 1; filter: drop-shadow(0 0 35px var(--accent-red)); }
+        @keyframes glitchPulse {
+            0% { transform: scale(0.98); opacity: 0.9; filter: drop-shadow(0 0 10px rgba(255, 0, 60, 0.3)); }
+            100% { transform: scale(1.02); opacity: 1; filter: drop-shadow(0 0 25px rgba(255, 0, 60, 0.7)); }
         }
 
         .loading-bar-container {
-            width: 70%; max-width: 250px; height: 5px;
-            background: rgba(255,255,255,0.05); border-radius: 10px;
+            width: 65%; max-width: 220px; height: 4px;
+            background: rgba(255,255,255,0.08); border-radius: 10px;
             overflow: hidden; margin-top: 15px;
         }
 
         .loading-bar-fill {
             width: 0%; height: 100%;
-            background: linear-gradient(90deg, #bb0024, var(--accent-red));
-            box-shadow: 0 0 15px var(--accent-red);
+            background: linear-gradient(90deg, #99001a, var(--accent-red));
+            box-shadow: 0 0 10px var(--accent-red);
         }
 
         #loading-pct {
-            font-size: 14px; font-weight: 700; margin-top: 10px; color: var(--accent-red);
-            letter-spacing: 2px; text-shadow: 0 0 8px var(--accent-red-glow);
+            font-size: 13px; font-weight: 700; margin-top: 10px; color: var(--accent-red);
+            letter-spacing: 2px;
         }
 
-        /* --- INTERFACE PRINCIPALE --- */
+        /* --- DESIGN PRINCIPAL --- */
         #main-content {
-            opacity: 0; transform: translateY(20px);
-            transition: all 0.6s cubic-bezier(0.2, 1, 0.3, 1);
+            opacity: 0; transform: translateY(15px);
+            transition: all 0.5s cubic-bezier(0.1, 1, 0.1, 1);
             padding: 20px; padding-bottom: 40px;
         }
 
         header { text-align: center; margin-bottom: 25px; }
-        header h1 { font-size: 40px; font-weight: 900; letter-spacing: 6px; margin: 0; text-transform: uppercase; text-shadow: 0 0 15px var(--accent-red-glow); }
-        header p { color: var(--accent-red); font-size: 11px; letter-spacing: 4px; font-weight: 700; text-transform: uppercase; margin-top: 5px; }
+        header h1 { font-size: 42px; font-weight: 900; letter-spacing: 8px; margin: 0; text-transform: uppercase; text-shadow: 0 0 20px var(--accent-red-glow); color: #fff; }
+        header p { color: var(--accent-red); font-size: 10px; letter-spacing: 5px; font-weight: 700; text-transform: uppercase; margin-top: 8px; opacity: 0.9; }
 
-        .nav-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 25px; }
+        /* BARRE DE NAVIGATION MODIFIÉE */
+        .nav-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 30px; }
         .nav-item { 
-            background: var(--card-bg); border: 1px solid rgba(255,0,60,0.15);
-            border-radius: 15px; padding: 14px 5px; text-align: center;
-            font-size: 14px; cursor: pointer; transition: all 0.2s;
+            background: var(--card-bg); border: 1px solid rgba(255,0,60,0.12);
+            border-radius: 16px; padding: 15px 5px; text-align: center;
+            font-size: 16px; cursor: pointer; transition: all 0.2s ease;
+            box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.02);
         }
-        .nav-item:active { background: rgba(255, 0, 60, 0.2); transform: scale(0.93); }
+        .nav-item:active { background: rgba(255, 0, 60, 0.25); border-color: var(--accent-red); transform: scale(0.92); box-shadow: 0 0 15px var(--accent-red-glow); }
 
+        /* GRILLE PRODUITS GLOW & PREMIUM */
         .product-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
         .product-card {
-            background: var(--card-bg); border-radius: 22px; padding: 12px;
-            border: 1px solid rgba(255,255,255,0.03);
+            background: var(--card-bg); border-radius: 24px; padding: 14px;
+            border: 1px solid rgba(255,255,255,0.04);
             display: flex; flex-direction: column; justify-content: space-between;
-            transition: transform 0.2s, border-color 0.2s;
+            transition: all 0.26s ease;
         }
-        .product-card:active { transform: scale(0.96); border-color: var(--accent-red); }
+        .product-card:active { transform: scale(0.97); border-color: var(--accent-red); box-shadow: 0 0 20px rgba(255, 0, 60, 0.25); }
 
         .img-box { 
-            width: 100%; aspect-ratio: 1/1; border-radius: 16px; 
-            background: linear-gradient(135deg, #1f1215 0%, #050508 100%); 
+            width: 100%; aspect-ratio: 1/1; border-radius: 18px; 
+            background: linear-gradient(135deg, #180d0f 0%, #030305 100%); 
             overflow: hidden; margin-bottom: 12px;
             border: 1px solid rgba(255, 255, 255, 0.05);
             display: flex; align-items: center; justify-content: center;
+            position: relative;
         }
-        .img-box img { width: 100%; height: 100%; object-fit: cover; }
+        .img-box::after {
+            content: ''; position: absolute; width: 100%; height: 100%;
+            background: radial-gradient(circle at center, rgba(255,0,60,0.08) 0%, transparent 70%);
+        }
 
-        .p-name { font-size: 13px; font-weight: 700; height: 34px; display: flex; align-items: center; justify-content: center; text-align: center; line-height: 1.2; }
-        .p-price { font-size: 19px; font-weight: 900; color: #ffffff; margin: 6px 0; text-align: center; }
+        .p-name { font-size: 13px; font-weight: 700; height: 34px; display: flex; align-items: center; justify-content: center; text-align: center; color: #eee; }
+        .p-price { font-size: 20px; font-weight: 900; color: #ffffff; margin: 6px 0; text-align: center; letter-spacing: 0.5px; }
         
         .btn-order {
-            background: linear-gradient(135deg, var(--accent-red), #990024);
-            color: #fff; border: none; border-radius: 14px; padding: 12px;
-            font-weight: 800; font-size: 11px; text-transform: uppercase;
-            box-shadow: 0 4px 12px rgba(255, 0, 60, 0.3); width: 100%; cursor: pointer;
+            background: linear-gradient(135deg, var(--accent-red), #aa0022);
+            color: #fff; border: none; border-radius: 15px; padding: 13px;
+            font-weight: 800; font-size: 11px; text-transform: uppercase; letter-spacing: 1px;
+            box-shadow: 0 5px 15px rgba(255, 0, 60, 0.35); width: 100%; cursor: pointer;
+            transition: opacity 0.2s;
         }
+        .btn-order:active { opacity: 0.85; }
 
-        /* --- FENÊTRES MODALES --- */
+        /* --- INTERFACE MODALE PREMIUM MODIFIÉE --- */
         .modal-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.85); backdrop-filter: blur(10px);
+            background: rgba(0,0,0,0.88); backdrop-filter: blur(12px);
             display: none; align-items: flex-end; z-index: 10000;
         }
         .modal-content {
-            width: 100%; background: #120b0d; border-radius: 30px 30px 0 0;
+            width: 100%; background: #0f0809; border-radius: 32px 32px 0 0;
             padding: 30px; border-top: 3px solid var(--accent-red);
-            animation: slideUp 0.3s cubic-bezier(0.1, 1, 0.1, 1);
+            animation: slideUp 0.35s cubic-bezier(0.15, 1, 0.2, 1);
+            box-shadow: 0 -10px 30px rgba(255, 0, 60, 0.15);
         }
         @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+
+        .info-text-box {
+            background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 0, 60, 0.15);
+            padding: 16px; border-radius: 16px; margin-bottom: 20px; font-size: 14px; line-height: 1.5; color: #e0e0e0;
+        }
 
         .form-group { margin-bottom: 16px; }
         .form-group label { display: block; font-size: 10px; color: var(--text-muted); text-transform: uppercase; margin-bottom: 6px; font-weight: 700; letter-spacing: 1px; }
         .form-group input { 
-            width: 100%; background: #181113; border: 1px solid #332023; 
-            border-radius: 12px; padding: 16px; color: #fff; outline: none; font-size: 14px;
+            width: 100%; background: #160e10; border: 1px solid #2d181b; 
+            border-radius: 14px; padding: 16px; color: #fff; outline: none; font-size: 14px;
+            transition: border-color 0.2s;
         }
-        .form-group input:focus { border-color: var(--accent-red); }
+        .form-group input:focus { border-color: var(--accent-red); box-shadow: 0 0 10px rgba(255,0,60,0.2); }
 
         .btn-confirm {
             background: linear-gradient(135deg, var(--accent-red), #c8002e);
             color: #fff; width: 100%; padding: 18px; border-radius: 16px; font-weight: 900; border: none;
-            text-transform: uppercase; margin-top: 10px; box-shadow: 0 4px 15px rgba(255, 0, 60, 0.4);
+            text-transform: uppercase; margin-top: 10px; box-shadow: 0 5px 20px rgba(255, 0, 60, 0.45);
+            letter-spacing: 1px;
+        }
+
+        .review-card {
+            background: #160f11; padding: 16px; border-radius: 16px; text-align: left; 
+            margin-bottom: 12px; border-left: 3px solid var(--accent-red);
         }
     </style>
 </head>
 <body>
 
-    <!-- CHARGEMENT SOUHAITÉ -->
+    <!-- CHARGEMENT TOTALEMENT NET ET AJUSTÉ -->
     <div id="splash-screen">
         <div class="splash-title">MAXIME KPS</div>
         <div class="splash-logo-container">
-            <img src="https://i.ibb.co/XxfPrLWh/image.png" class="splash-logo-img">
+            <img src="https://i.ibb.co/XxfPrLWh/image.png" class="splash-logo-img" alt="KPS Logo">
         </div>
         <div class="loading-bar-container"><div class="loading-bar-fill" id="bar"></div></div>
         <div id="loading-pct">0%</div>
     </div>
 
-    <!-- INTERFACE -->
+    <!-- RESTE DE L'INTERFACE -->
     <div id="main-content">
         <header>
             <h1>K P S</h1>
             <p>Premium Luxury Store</p>
         </header>
 
+        <!-- BARRE DE NAVIGATION CORRIGÉE AVEC TES ACCÈS EXACTS -->
         <div class="nav-grid">
-            <div class="nav-item" onclick="navTo('https://t.me/maxime_kps3')">💬</div>
+            <div class="nav-item" onclick="openRefundInfo()">💬</div>
             <div class="nav-item" onclick="openReviews()">⭐</div>
-            <div class="nav-item" onclick="alert('Profil synchronisé avec Telegram.')">👤</div>
-            <div class="nav-item" onclick="navTo('https://t.me/maxime_kps3')">📢</div>
+            <div class="nav-item" onclick="navTo('https://t.me/maxime_kps3')">👤</div>
+            <div class="nav-item" onclick="navTo('https://t.me/+a3GNk9gv-9QwMTg0')">📢</div>
         </div>
 
         <div class="product-grid" id="grid"></div>
     </div>
 
-    <!-- MODAL DE COMMANDE -->
+    <!-- MODAL FENÊTRE DESCRIPTION REFUND (BULLE) -->
+    <div class="modal-overlay" id="refundModal">
+        <div class="modal-content">
+            <div style="text-align:center; margin-bottom:20px;">
+                <h2 style="margin:0; font-size: 24px; letter-spacing:1px;">Service de Refund 💬</h2>
+            </div>
+            <div class="info-text-box">
+                Le <strong>service de refund</strong> sur chaque commande est intégralement <strong>à nos frais</strong>.<br><br>
+                Le processus se déroule entièrement de notre côté grâce à l'exploitation de <strong>fuseaux horaires spécifiques</strong> que nous possédons et maîtrisons.<br><br>
+                Chaque iPhone commandé est ensuite expédié et <strong>livré directement chez vous sous un délai de 2 à 5 jours</strong> maximum, de manière totalement sécurisée.
+            </div>
+            <button class="btn-confirm" onclick="closeM('refundModal')">J'ai compris</button>
+        </div>
+    </div>
+
+    <!-- MODAL FENÊTRE DE COMMANDE -->
     <div class="modal-overlay" id="modal">
         <div class="modal-content">
             <div style="text-align:center; margin-bottom:20px;">
@@ -198,19 +237,27 @@
         </div>
     </div>
 
-    <!-- MODAL AVIS -->
+    <!-- MODAL AVIS AMÉLIORÉS ET RÉALISTES (ÉTOILE) -->
     <div class="modal-overlay" id="reviewModal">
         <div class="modal-content" style="text-align:center;">
-            <h2>Avis Clients ⭐</h2>
-            <div style="background:#1c1214; padding:15px; border-radius:12px; text-align:left; margin-bottom:10px;">
-                <b style="color:var(--accent-red);">@Lukas_d</b> <span style="color:#ffcc00;">⭐⭐⭐⭐⭐</span>
-                <p style="margin:5px 0 0 0; font-size:13px; color:var(--text-muted);">Reçu l'iPhone 16 Pro Max en 4 jours. Produit parfait, rien à dire merci Maxime.</p>
+            <h2 style="margin-bottom:20px;">Avis Clients Vérifiés ⭐</h2>
+            
+            <div class="review-card">
+                <b style="color:var(--accent-red);">@Aurelien_Rdx</b> <span style="color:#ffcc00; font-size:12px;">⭐⭐⭐⭐⭐</span>
+                <p style="margin:5px 0 0 0; font-size:13px; color:var(--text-muted);">iPhone 16 Pro Max bien reçu en 3 jours pile ! Le refund est passé nickel comme promis par Maxime, équipe hyper pro.</p>
             </div>
-            <div style="background:#1c1214; padding:15px; border-radius:12px; text-align:left; margin-bottom:20px;">
-                <b style="color:var(--accent-red);">@Sacha_vlc</b> <span style="color:#ffcc00;">⭐⭐⭐⭐⭐</span>
-                <p style="margin:5px 0 0 0; font-size:13px; color:var(--text-muted);">MacBook Pro bien arrivé, emballage ultra sécurisé. KPS c'est du sérieux.</p>
+            
+            <div class="review-card">
+                <b style="color:var(--accent-red);">@Nico_Tech9</b> <span style="color:#ffcc00; font-size:12px;">⭐⭐⭐⭐⭐</span>
+                <p style="margin:5px 0 0 0; font-size:13px; color:var(--text-muted);">Masterclass, j'avais des doutes avec l'histoire des fuseaux horaires mais technique incroyable. MacBook livré à la maison super vite.</p>
             </div>
-            <button class="btn-confirm" onclick="closeReviews()">Fermer</button>
+
+            <div class="review-card">
+                <b style="color:var(--accent-red);">@Killian_bzh</b> <span style="color:#ffcc00; font-size:12px;">⭐⭐⭐⭐⭐</span>
+                <p style="margin:5px 0 0 0; font-size:13px; color:var(--text-muted);">Déjà ma 2ème commande sur KPS et toujours zéro problème. Suivi carré et envoi rapide.</p>
+            </div>
+
+            <button class="btn-confirm" onclick="closeM('reviewModal')" style="margin-top:10px;">Fermer les avis</button>
         </div>
     </div>
 
@@ -238,38 +285,54 @@
             const card = document.createElement('div');
             card.className = 'product-card';
             card.innerHTML = `<div class="img-box">
-                                <span style="font-weight:900; font-size:11px; color:var(--accent-red); letter-spacing:1px;">${p.label}</span>
+                                <span style="font-weight:900; font-size:11px; color:var(--accent-red); letter-spacing:1.5px; text-shadow: 0 0 8px var(--accent-red-glow);">${p.label}</span>
                              </div>
                              <div class="p-name">${p.name}</div>
                              <div class="p-price">${p.price}</div>
-                             <button class="btn-order" onclick="openM('${p.name}', '${p.price}')">Commander</button>`;
+                             <button class="btn-order" onclick="openOrder('${p.name}', '${p.price}')">Commander</button>`;
             grid.appendChild(card);
         });
 
         let currentP = ""; let currentPr = "";
+        let activeModalId = "";
 
-        function openM(n, p) {
-            if(tg.HapticFeedback) tg.HapticFeedback.impactOccurred('medium');
-            currentP = n; currentPr = p;
-            document.getElementById('m-title').innerText = n;
-            document.getElementById('m-price').innerText = p;
-            document.getElementById('modal').style.display = 'flex';
-            
+        function openRefundInfo() {
+            if(tg.HapticFeedback) tg.HapticFeedback.impactOccurred('light');
+            document.getElementById('refundModal').style.display = 'flex';
+            activeModalId = 'refundModal';
             tg.BackButton.show();
-            tg.BackButton.onClick(closeM);
-        }
-
-        function closeM() {
-            document.getElementById('modal').style.display = 'none';
-            tg.BackButton.hide();
+            tg.BackButton.onClick(() => closeM('refundModal'));
         }
 
         function openReviews() {
             if(tg.HapticFeedback) tg.HapticFeedback.impactOccurred('light');
             document.getElementById('reviewModal').style.display = 'flex';
+            activeModalId = 'reviewModal';
+            tg.BackButton.show();
+            tg.BackButton.onClick(() => closeM('reviewModal'));
         }
-        function closeReviews() { document.getElementById('reviewModal').style.display = 'none'; }
-        function navTo(url) { if(tg.HapticFeedback) tg.HapticFeedback.impactOccurred('light'); window.location.href = url; }
+
+        function openOrder(n, p) {
+            if(tg.HapticFeedback) tg.HapticFeedback.impactOccurred('medium');
+            currentP = n; currentPr = p;
+            document.getElementById('m-title').innerText = n;
+            document.getElementById('m-price').innerText = p;
+            document.getElementById('modal').style.display = 'flex';
+            activeModalId = 'modal';
+            
+            tg.BackButton.show();
+            tg.BackButton.onClick(() => closeM('modal'));
+        }
+
+        function closeM(id) {
+            document.getElementById(id).style.display = 'none';
+            tg.BackButton.hide();
+        }
+
+        function navTo(url) { 
+            if(tg.HapticFeedback) tg.HapticFeedback.impactOccurred('medium'); 
+            window.location.href = url; 
+        }
 
         function finish() {
             const n = document.getElementById('nom').value.trim();
@@ -279,7 +342,7 @@
             
             if(!n || !pr || !m || !a) { 
                 if(tg.HapticFeedback) tg.HapticFeedback.notificationOccurred('error');
-                alert("Merci de remplir tous les champs obligatoires."); 
+                alert("Remplissez tous les champs pour valider l'envoi."); 
                 return; 
             }
 
@@ -287,26 +350,27 @@
             const txt = `🛒 NOUVELLE COMMANDE KPS 🛒\n\nProduit: ${currentP}\nPrix: ${currentPr}\n\nClient: ${pr} ${n}\nEmail: ${m}\nAdresse: ${a}`;
             
             navigator.clipboard.writeText(txt).then(() => {
-                alert("Détails copiés ! Envoi de votre demande vers @maxime_kps3.");
+                alert("Informations prêtes et copiées ! Redirection vers ton chat @maxime_kps3...");
                 window.location.href = "https://t.me/maxime_kps3";
             });
         }
 
+        // Animation fluide de la barre de progression
         let pct = 0;
-        const i = setInterval(() => {
-            pct += Math.floor(Math.random() * 6) + 3;
+        const loader = setInterval(() => {
+            pct += Math.floor(Math.random() * 7) + 4;
             if(pct >= 100) {
-                pct = 100; clearInterval(i);
+                pct = 100; clearInterval(loader);
                 setTimeout(() => {
                     document.getElementById('splash-screen').style.opacity = '0';
                     document.getElementById('splash-screen').style.visibility = 'hidden';
                     document.getElementById('main-content').style.opacity = '1';
                     document.getElementById('main-content').style.transform = 'translateY(0)';
-                }, 400);
+                }, 350);
             }
             document.getElementById('bar').style.width = pct + '%';
             document.getElementById('loading-pct').innerText = pct + '%';
-        }, 60);
+        }, 50);
     </script>
 </body>
 </html>
