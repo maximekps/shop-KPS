@@ -3,204 +3,549 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KPS PREMIUM V2</title>
+    <title>KPS PREMIUM</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         :root {
-            --bg-color: #0a0a0c;
-            --card-bg: #16161a;
-            --accent-color: #007aff;
+            --bg-color: #050507;
+            --card-bg: rgba(18, 18, 24, 0.85);
+            --accent-neon: #ff2a2a; 
+            --accent-glow: rgba(255, 42, 42, 0.15);
             --text-main: #ffffff;
-            --text-muted: #a1a1a6;
+            --text-muted: #747480;
+            --border-neon: rgba(255, 255, 255, 0.08);
+        }
+
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             background-color: var(--bg-color);
-            background: radial-gradient(circle at top, #1c1c21 0%, #0a0a0c 100%);
+            background: radial-gradient(circle at top, #1a0808 0%, #050507 100%);
             color: var(--text-main);
             margin: 0;
-            padding: 20px;
-            padding-bottom: 100px;
+            padding: 0;
+            overflow-x: hidden;
+        }
+
+        /* --- ÉCRAN DE CHARGEMENT --- */
+        #splash-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, #1c0a0a 0%, #000000 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease, visibility 0.5s;
+        }
+
+        .splash-logo-img {
+            width: 160px;
+            height: auto;
+            margin-bottom: 40px;
+            filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.2));
+            animation: pulse 2s infinite alternate;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.2)); }
+            100% { transform: scale(1.05); filter: drop-shadow(0 0 25px var(--accent-neon)); }
+        }
+
+        .loading-wrapper {
+            width: 75%;
+            max-width: 280px;
+        }
+
+        .loading-info {
+            display: flex;
+            justify-content: space-between;
+            font-size: 11px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 8px;
+        }
+
+        #loading-text {
+            color: var(--accent-neon);
+            font-weight: bold;
+        }
+
+        .progress-container {
+            width: 100%;
+            height: 3px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(90deg, #ff2a2a, #ffffff);
+            box-shadow: 0 0 8px var(--accent-neon);
+            transition: width 0.1s linear;
+        }
+
+        /* --- SITE PRINCIPAL --- */
+        #main-content {
+            opacity: 0;
+            transform: translateY(15px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+            padding: 16px;
+            padding-bottom: 60px;
         }
 
         header {
             text-align: center;
-            margin-bottom: 30px;
-            padding-top: 10px;
+            margin-bottom: 25px;
+            margin-top: 10px;
         }
 
         header h1 {
-            font-size: 24px;
+            font-size: 28px;
+            font-weight: 900;
             margin: 0;
-            letter-spacing: 1px;
-            background: linear-gradient(to bottom, #fff 0%, #888 100%);
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            background: linear-gradient(to bottom, #ffffff 60%, #555555 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
         header p {
-            color: var(--text-muted);
-            font-size: 14px;
-            margin-top: 5px;
+            color: var(--accent-neon);
+            font-size: 11px;
+            margin-top: 6px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-weight: 600;
+            opacity: 0.8;
+        }
+
+        .quick-nav {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            margin-bottom: 25px;
+        }
+
+        .nav-item {
+            background: var(--card-bg);
+            border: 1px solid var(--border-neon);
+            border-radius: 12px;
+            padding: 12px 4px;
+            text-align: center;
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--text-main);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s;
+        }
+
+        .nav-item:active {
+            border-color: var(--accent-neon);
+            background: rgba(255, 42, 42, 0.05);
+            transform: scale(0.95);
+        }
+
+        .nav-icon {
+            font-size: 16px;
+            color: var(--accent-neon);
+        }
+
+        .section-title {
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+            padding-left: 6px;
+            border-left: 3px solid var(--accent-neon);
+            color: #ffffff;
         }
 
         .products-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
+            gap: 12px;
         }
 
         .product-card {
             background: var(--card-bg);
-            border-radius: 18px;
-            padding: 15px;
+            border-radius: 16px;
+            padding: 12px;
             text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            transition: transform 0.2s;
+            border: 1px solid var(--border-neon);
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .product-card:active {
-            transform: scale(0.95);
-            background: rgba(255, 255, 255, 0.08);
+            transform: scale(0.97);
+            border-color: var(--accent-neon);
+        }
+
+        .product-image-container {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            border-radius: 10px;
+            overflow: hidden;
+            background: #09090b;
+            margin-bottom: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.03);
         }
 
         .product-image {
             width: 100%;
-            aspect-ratio: 1/1;
-            border-radius: 12px;
-            margin-bottom: 12px;
+            height: 100%;
             object-fit: cover;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            background-color: #111;
         }
 
         .product-name {
-            font-size: 13px;
-            font-weight: 500;
-            margin-bottom: 8px;
+            font-size: 12px;
+            font-weight: 700;
             color: var(--text-main);
+            margin-bottom: 4px;
             min-height: 32px;
             display: flex;
             align-items: center;
             justify-content: center;
+            line-height: 1.3;
         }
 
         .product-price {
-            font-size: 16px;
-            font-weight: 700;
-            color: #fff;
-            text-shadow: 0 0 10px rgba(255,255,255,0.3);
-            margin-bottom: 12px;
+            font-size: 18px;
+            font-weight: 800;
+            color: #ffffff;
+            margin-bottom: 10px;
+            letter-spacing: 0.5px;
         }
 
         .buy-button {
-            background-color: var(--accent-color);
-            color: #fff;
+            background: linear-gradient(135deg, #ff2a2a 0%, #b30000 100%);
+            color: #ffffff;
             border: none;
-            padding: 8px;
-            border-radius: 10px;
-            font-weight: 600;
-            font-size: 13px;
-            cursor: pointer;
-            width: 100%;
-        }
-
-        @keyframes glow {
-            0% { border-color: rgba(255,255,255,0.05); }
-            50% { border-color: rgba(255,255,255,0.2); }
-            100% { border-color: rgba(255,255,255,0.05); }
-        }
-
-        .product-card {
-            animation: glow 3s infinite;
-        }
-
-        /* Bouton Commander pour la Mini App */
-        #commander-btn {
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: #fff;
-            color: #000;
-            border: none;
-            padding: 12px 24px;
+            padding: 10px;
             border-radius: 10px;
             font-weight: 700;
-            font-size: 16px;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
             cursor: pointer;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-            display: none;
+            width: 100%;
+            box-shadow: 0 2px 8px rgba(255, 42, 42, 0.2);
+        }
+
+        /* --- FENÊTRE CONTEXTUELLE DE COMMANDE (MODAL) --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(8px);
+            z-index: 10000;
+            display: flex;
+            align-items: flex-end;
+            visibility: hidden;
+            opacity: 0;
+            transition: opacity 0.3s ease, visibility 0.3s;
+        }
+
+        .modal-overlay.active {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .modal-box {
+            width: 100%;
+            background: #0d0d11;
+            border-top: 2px solid var(--accent-neon);
+            border-radius: 24px 24px 0 0;
+            padding: 24px;
+            max-height: 85vh;
+            overflow-y: auto;
+            transform: translateY(100%);
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .modal-overlay.active .modal-box {
+            transform: translateY(0);
+        }
+
+        .modal-header {
+            text-align: center;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .modal-badge {
+            background: rgba(255, 42, 42, 0.15);
+            border: 1px solid var(--accent-neon);
+            color: #ffffff;
+            font-weight: bold;
+            padding: 6px 16px;
+            border-radius: 20px;
+            display: inline-block;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        .close-btn {
+            position: absolute;
+            right: 0;
+            top: 0;
+            background: rgba(255, 255, 255, 0.05);
+            border: none;
+            color: #fff;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        /* FORMULAIRE DESIGN PREMIUM */
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 10px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--text-muted);
+            margin-bottom: 6px;
+        }
+
+        .form-group input {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 14px;
+            color: #fff;
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .form-group input:focus {
+            border-color: var(--accent-neon);
+            background: rgba(255, 42, 42, 0.02);
+        }
+
+        .submit-order-btn {
+            background: linear-gradient(135deg, #007aff 0%, #0056b3 100%);
+            color: white;
+            border: none;
+            width: 100%;
+            padding: 16px;
+            border-radius: 14px;
+            font-weight: 700;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 10px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 122, 255, 0.3);
+        }
+
+        .submit-order-btn:active {
+            transform: scale(0.98);
         }
     </style>
 </head>
 <body>
 
-    <header>
-        <h1>SHOP KPS PREMIUM V2</h1>
-        <p>Service de Refund Qualité</p>
-    </header>
+    <!-- ÉCRAN DE CHARGEMENT -->
+    <div id="splash-screen">
+        <img src="https://i.ibb.co/60Kf4nHR/image.png" class="splash-logo-img" alt="Logo Cagoule">
+        <div class="loading-wrapper">
+            <div class="loading-info">
+                <span>Chargement</span>
+                <span id="loading-text">0%</span>
+            </div>
+            <div class="progress-container">
+                <div class="progress-bar" id="progress-bar"></div>
+            </div>
+        </div>
+    </div>
 
-    <div class="products-grid" id="grid"></div>
+    <!-- SITE PRINCIPAL -->
+    <div id="main-content">
+        <header>
+            <h1>K P S</h1>
+            <p>Création & Service Premium</p>
+        </header>
 
-    <button id="commander-btn">COMMANDER SUR TELEGRAM</button>
+        <div class="quick-nav">
+            <div class="nav-item"><span class="nav-icon">💬</span>Contact</div>
+            <div class="nav-item"><span class="nav-icon">⭐</span>Avis</div>
+            <div class="nav-item"><span class="nav-icon">👤</span>Compte</div>
+            <div class="nav-item"><span class="nav-icon">📢</span>Canal</div>
+        </div>
+
+        <div class="section-title">Nos Équipements</div>
+        <div class="products-grid" id="grid"></div>
+    </div>
+
+    <!-- FENÊTRE CONTEXTUELLE DE COMMANDE -->
+    <div class="modal-overlay" id="orderModal">
+        <div class="modal-box">
+            <div class="modal-header">
+                <button class="close-btn" onclick="closeModal()">×</button>
+                <h2 id="modalProductName" style="margin:5px 0; font-size:20px;">Produit</h2>
+                <div class="modal-badge" id="modalProductPrice">0€</div>
+            </div>
+            
+            <!-- Formulaire de Coordonnées -->
+            <div class="form-group">
+                <label>Nom</label>
+                <input type="text" id="lastName" placeholder="Ex: Dupont">
+            </div>
+            <div class="form-group">
+                <label>Prénom</label>
+                <input type="text" id="firstName" placeholder="Ex: Jean">
+            </div>
+            <div class="form-group">
+                <label>Adresse Mail</label>
+                <input type="email" id="email" placeholder="Ex: jean.dupont@gmail.com">
+            </div>
+            <div class="form-group">
+                <label>Adresse Postale (Où tu habites)</label>
+                <input type="text" id="address" placeholder="Ex: 12 Rue des Oliviers, 75001 Paris">
+            </div>
+
+            <button class="submit-order-btn" onclick="sendOrder()">🛒 Confirmer la commande</button>
+        </div>
+    </div>
 
     <script>
         const tg = window.Telegram.WebApp;
         tg.expand();
         tg.ready();
 
-        const commanderBtn = document.getElementById('commander-btn');
+        let selectedProduct = {};
 
-        // Les produits avec des images temporaires pour valider l'interface
         const products = [
-            { id: 1, name: "iPhone 14 Pro / Max", price: "110€", img: "https://via.placeholder.com/150" },
-            { id: 2, name: "iPhone 15 / Plus", price: "130€", img: "https://via.placeholder.com/150" },
-            { id: 3, name: "iPhone 15 Pro / Max", price: "150€", img: "https://via.placeholder.com/150" },
-            { id: 4, name: "iPhone 16 / Plus", price: "230€", img: "https://via.placeholder.com/150" },
-            { id: 5, name: "iPhone 16 Pro / Max", price: "250€", img: "https://via.placeholder.com/150" },
-            { id: 6, name: "iPhone 17 Air", price: "200€", img: "https://via.placeholder.com/150" },
-            { id: 7, name: "iPhone 17", price: "270€", img: "https://via.placeholder.com/150" },
-            { id: 8, name: "iPhone 17 Pro", price: "320€", img: "https://via.placeholder.com/150" },
-            { id: 9, name: "iPhone 17 Pro Max", price: "350€", img: "https://via.placeholder.com/150" },
-            { id: 10, name: "MacBook Pro M3 14\"", price: "330€", img: "https://via.placeholder.com/150" },
-            { id: 11, name: "MacBook Neo Base", price: "150€", img: "https://via.placeholder.com/150" },
-            { id: 12, name: "MacBook Neo Supérieur", price: "180€", img: "https://via.placeholder.com/150" }
+            { id: 1, name: "iPhone 14 Pro / Max", price: "110€", img: "https://images.unsplash.com/photo-1678685888221-cda773a3dcdb?w=400&auto=format&fit=crop&q=80" },
+            { id: 2, name: "iPhone 15 / Plus", price: "130€", img: "https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=400&auto=format&fit=crop&q=80" },
+            { id: 3, name: "iPhone 15 Pro / Max", price: "150€", img: "https://images.unsplash.com/photo-1695048133044-8d4512e06f15?w=400&auto=format&fit=crop&q=80" },
+            { id: 4, name: "iPhone 16 / Plus", price: "230€", img: "https://images.unsplash.com/photo-1726837021415-325b7b9ca8cc?w=400&auto=format&fit=crop&q=80" },
+            { id: 5, name: "iPhone 16 Pro / Max", price: "250€", img: "https://images.unsplash.com/photo-1727376378453-27c9201bd27d?w=400&auto=format&fit=crop&q=80" },
+            { id: 6, name: "iPhone 17 Air", price: "200€", img: "https://images.unsplash.com/photo-1616348436168-de43ad0db179?w=400&auto=format&fit=crop&q=80" },
+            { id: 7, name: "iPhone 17", price: "270€", img: "https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?w=400&auto=format&fit=crop&q=80" },
+            { id: 8, name: "iPhone 17 Pro", price: "320€", img: "https://images.unsplash.com/photo-1592899677977-9c10ca588bbd?w=400&auto=format&fit=crop&q=80" },
+            { id: 9, name: "iPhone 17 Pro Max", price: "350€", img: "https://images.unsplash.com/photo-1573148195900-7845dcb9b127?w=400&auto=format&fit=crop&q=80" },
+            { id: 10, name: "MacBook Pro M3 14\"", price: "330€", img: "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=400&auto=format&fit=crop&q=80" },
+            { id: 11, name: "MacBook Neo Base", price: "150€", img: "https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?w=400&auto=format&fit=crop&q=80" },
+            { id: 12, name: "MacBook Neo Supérieur", price: "180€", img: "https://images.unsplash.com/photo-1525547719571-a2d4ac8945e2?w=400&auto=format&fit=crop&q=80" }
         ];
 
         const grid = document.getElementById('grid');
-
         products.forEach(product => {
             const card = document.createElement('div');
             card.className = 'product-card';
             card.innerHTML = `
-                <img src="${product.img}" class="product-image" alt="${product.name}">
+                <div class="product-image-container">
+                    <img src="${product.img}" class="product-image" alt="${product.name}">
+                </div>
                 <div class="product-name">${product.name}</div>
                 <div class="product-price">${product.price}</div>
-                <button class="buy-button" onclick="selectProduct('${product.name}', '${product.price}')">Choisir</button>
+                <button class="buy-button" onclick="openModal('${product.name}', '${product.price}')">Commander</button>
             `;
             grid.appendChild(card);
         });
 
-        function selectProduct(name, price) {
-            // Afficher le bouton de commande lorsqu'un produit est sélectionné
-            commanderBtn.style.display = 'block';
-
-            // Gérer le clic sur le bouton de commande
-            commanderBtn.onclick = function() {
-                // Envoyer les données de la commande à Telegram
-                tg.sendData(JSON.stringify({
-                    product: name,
-                    price: price
-                }));
-                // Fermer l'application après la commande
-                tg.close();
-            };
+        // Fonctions d'ouverture et fermeture de la pop-up
+        function openModal(name, price) {
+            selectedProduct = { name, price };
+            document.getElementById('modalProductName').innerText = name;
+            document.getElementById('modalProductPrice').innerText = price;
+            document.getElementById('orderModal').classList.add('active');
         }
+
+        function closeModal() {
+            document.getElementById('orderModal').classList.remove('active');
+        }
+
+        // Système d'envoi et copie automatique du texte
+        function sendOrder() {
+            const nom = document.getElementById('lastName').value.trim();
+            const prenom = document.getElementById('firstName').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const adresse = document.getElementById('address').value.trim();
+
+            if(!nom || !prenom || !email || !adresse) {
+                alert("Remplis toutes les cases pour commander !");
+                return;
+            }
+
+            // Structuration du texte de la commande à envoyer
+            const orderText = `📦 NOUVELLE COMMANDE KPS 📦\n\n` +
+                              `🔹 Produit : ${selectedProduct.name}\n` +
+                              `🔹 Prix : ${selectedProduct.price}\n\n` +
+                              `👤 Client : ${prenom} ${nom}\n` +
+                              `📧 Email : ${email}\n` +
+                              `📍 Adresse : ${adresse}`;
+
+            // Copie automatique dans le presse-papier
+            navigator.clipboard.writeText(orderText).then(() => {
+                alert("Infos copiées ! Tu vas être redirigé vers @maxime_kps3. Colle juste le texte dans la discussion.");
+                
+                // Redirection directe vers ton profil Telegram
+                window.location.href = "https://t.me/maxime_kps3";
+            }).catch(err => {
+                // Secours si le navigateur bloque l'accès direct automatique
+                window.location.href = "https://t.me/maxime_kps3";
+            });
+        }
+
+        // Animation du Splash Screen
+        const splashScreen = document.getElementById('splash-screen');
+        const progressBar = document.getElementById('progress-bar');
+        const loadingText = document.getElementById('loading-text');
+        const mainContent = document.getElementById('main-content');
+
+        let progress = 0;
+        const interval = setInterval(() => {
+            progress += Math.floor(Math.random() * 6) + 2;
+            if (progress >= 100) {
+                progress = 100;
+                clearInterval(interval);
+                
+                setTimeout(() => {
+                    splashScreen.style.opacity = '0';
+                    splashScreen.style.visibility = 'hidden';
+                    mainContent.style.opacity = '1';
+                    mainContent.style.transform = 'translateY(0)';
+                }, 400);
+            }
+            progressBar.style.width = `${progress}%`;
+            loadingText.innerText = `${progress}%`;
+        }, 70);
     </script>
 </body>
 </html>
