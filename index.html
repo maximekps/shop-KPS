@@ -95,7 +95,6 @@
         header h1 { font-size: 46px; font-weight: 900; letter-spacing: 10px; margin: 0; text-transform: uppercase; text-shadow: 0 0 20px var(--accent-red-glow); color: #fff; }
         header p { color: var(--accent-red); font-size: 11px; letter-spacing: 3px; font-weight: 900; text-transform: uppercase; margin-top: 8px; text-shadow: 0 0 8px var(--accent-red-glow); }
 
-        /* NOUVELLE BARRE DE NAVIGATION COMMME SUR LES CAPTURES */
         .nav-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 35px; position: relative; z-index: 10; }
         .nav-item { 
             background: transparent; border: 1px solid rgba(255,0,60,0.15); border-radius: 16px; padding: 15px 5px; text-align: center; cursor: pointer; transition: all 0.2s ease; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px;
@@ -123,7 +122,6 @@
             background: linear-gradient(135deg, var(--accent-red), #aa0022); color: #fff; border: none; border-radius: 15px; padding: 13px; font-weight: 800; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; box-shadow: 0 5px 15px rgba(255, 0, 60, 0.35); width: 100%; cursor: pointer;
         }
 
-        /* SYSTÈME DE TIROIR MODAL ULTRA PRO (BOTTOM SHEET) */
         .modal-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.75); backdrop-filter: blur(8px); display: none; align-items: flex-end; z-index: 10000;
         }
@@ -132,7 +130,6 @@
         }
         @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
 
-        /* Petite barre décorative du haut de la modale */
         .modal-handle { width: 40px; height: 4px; background: rgba(255, 255, 255, 0.2); border-radius: 2px; margin: -15px auto 20px auto; }
 
         .modal-subtitle { text-align: center; font-size: 10px; font-weight: 900; color: var(--accent-red); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 5px; }
@@ -163,7 +160,6 @@
             background: linear-gradient(135deg, var(--accent-red), #c8002e); color: #fff; width: 100%; padding: 18px; border-radius: 16px; font-weight: 900; border: none; text-transform: uppercase; margin-top: 10px; box-shadow: 0 5px 20px rgba(255, 0, 60, 0.45); cursor: pointer;
         }
 
-        /* DESIGN MAGNIFIQUE DES BOUTONS DE PLATEFORME (COMME TES IMAGES) */
         .platform-btn {
             display: flex; align-items: center; padding: 16px 20px; border-radius: 18px; margin-bottom: 12px; cursor: pointer; position: relative; transition: transform 0.2s ease; text-decoration: none;
         }
@@ -178,13 +174,11 @@
         .platform-arrow { position: absolute; right: 20px; opacity: 0.6; display: flex; align-items: center; }
         .platform-arrow svg { width: 16px; height: 16px; fill: none; stroke-width: 2.5; }
 
-        /* Styles Spécifiques pour les Couleurs des Boutons */
         .btn-snap { background: #FFFC00; color: #000000; }
         .btn-snap .platform-arrow svg { stroke: #000000; }
         .btn-tg { background: #24A1DE; color: #ffffff; }
         .btn-tg .platform-arrow svg { stroke: #ffffff; }
 
-        /* Boîte de Rappel Livraison Éclair */
         .delivery-notice {
             background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255,255,255,0.05); border-radius: 18px; padding: 18px; margin-bottom: 20px; display: flex; gap: 15px; align-items: flex-start;
         }
@@ -193,7 +187,7 @@
         .delivery-notice-title { font-weight: 900; color: #fff; margin-bottom: 3px; font-size: 14px; }
 
         .review-card {
-            background: #12090a; padding: 16px; border-radius: 16px; text-align: left; margin-bottom: 12px; border-left: 3px solid var(--accent-red);
+            background: #12090a; padding: 14px; border-radius: 16px; text-align: left; margin-bottom: 12px; border-left: 3px solid var(--accent-red);
         }
     </style>
 </head>
@@ -217,7 +211,6 @@
             <p>PREMIUM REFUND APPLE</p>
         </header>
 
-        <!-- NOUVELLE BARRE DE NAVIGATION AUX CODES DU HOODAPP -->
         <div class="nav-grid">
             <div class="nav-item" onclick="openRefundInfo()">
                 <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.684 10.742h.01m3.99 0h.01M9 16.5h6m3 2.25H6a3 3 0 0 1-3-3V7a3 3 0 0 1 3-3h12a3 3 0 0 1 3 3v8.75a3 3 0 0 1-3 3Z"/></svg>
@@ -240,14 +233,12 @@
         <div class="product-grid" id="grid"></div>
     </div>
 
-    <!-- TIROIR : NOUS CONTACTER -->
     <div class="modal-overlay" id="contactModal">
         <div class="modal-content">
             <div class="modal-handle"></div>
             <div class="modal-subtitle">Nous Contacter</div>
             <div class="modal-title">Choisir une <span>plateforme</span></div>
 
-            <!-- Option Snapchat -->
             <div class="platform-btn btn-snap" onclick="openExternalLink('https://snapchat.com/t/RCiU8zI9')">
                 <div class="platform-icon-container">
                     <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2c-4.97 0-9 4.03-9 9 0 2.12.74 4.07 1.97 5.61L4.35 19.4c-.39.39-.39 1.02 0 1.41.39.39 1.02.39 1.41 0l2.79-2.79C10.09 18.64 11.02 19 12 19c4.97 0 9-4.03 9-9s-4.03-9-9-9zm0 15c-.83 0-1.58-.28-2.2-.75l-.32-.24-2.17 2.17.48-1.92-.19-.31C6.73 14.79 6 13.11 6 11c0-3.31 2.69-6 6-6s6 2.69 6 6c0 2.11-.73 3.79-1.6 4.95l-.19.31.48 1.92-2.17-2.17-.32.24c-.62.47-1.37.75-2.2.75z"/></svg>
@@ -261,7 +252,6 @@
                 </div>
             </div>
 
-            <!-- Option Telegram -->
             <div class="platform-btn btn-tg" onclick="openTgLink('https://t.me/maxime_kps3')">
                 <div class="platform-icon-container">
                     <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 12 10 10-4.48 10-12S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-1-.65-.35-1 .22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 0 0-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.37.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"/></svg>
@@ -279,7 +269,6 @@
         </div>
     </div>
 
-    <!-- TIROIR : RENSEIGNER COMMANDE -->
     <div class="modal-overlay" id="modal">
         <div class="modal-content">
             <div class="modal-handle"></div>
@@ -301,7 +290,6 @@
         </div>
     </div>
 
-    <!-- TIROIR FINALISATION MODE HOODAPP -->
     <div class="modal-overlay" id="checkoutModal">
         <div class="modal-content">
             <div class="modal-handle"></div>
@@ -318,7 +306,6 @@
                 </div>
             </div>
 
-            <!-- Bouton Finaliser sur Snapchat -->
             <div class="platform-btn btn-snap" onclick="redirectToPlatform('snap')">
                 <div class="platform-icon-container">
                     <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2c-4.97 0-9 4.03-9 9 0 2.12.74 4.07 1.97 5.61L4.35 19.4c-.39.39-.39 1.02 0 1.41.39.39 1.02.39 1.41 0l2.79-2.79C10.09 18.64 11.02 19 12 19c4.97 0 9-4.03 9-9s-4.03-9-9-9zm0 15c-.83 0-1.58-.28-2.2-.75l-.32-.24-2.17 2.17.48-1.92-.19-.31C6.73 14.79 6 13.11 6 11c0-3.31 2.69-6 6-6s6 2.69 6 6c0 2.11-.73 3.79-1.6 4.95l-.19.31.48 1.92-2.17-2.17-.32.24c-.62.47-1.37.75-2.2.75z"/></svg>
@@ -332,7 +319,6 @@
                 </div>
             </div>
 
-            <!-- Bouton Finaliser sur Telegram -->
             <div class="platform-btn btn-tg" onclick="redirectToPlatform('tg')">
                 <div class="platform-icon-container">
                     <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 12 10 10-4.48 10-12S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-1-.65-.35-1 .22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 0 0-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.37.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"/></svg>
@@ -348,7 +334,6 @@
         </div>
     </div>
 
-    <!-- AUTRES ANCIENNES MODALES CONSERVÉES -->
     <div class="modal-overlay" id="refundModal">
         <div class="modal-content">
             <div class="modal-handle"></div>
@@ -367,18 +352,17 @@
         <div class="modal-content" style="text-align:center;">
             <div class="modal-handle"></div>
             <h2 style="margin-bottom:20px;">Avis Clients Telegram ⭐</h2>
+            
             <div class="review-card">
-                <b style="color:var(--accent-red);">@keke_94100</b> <span style="color:#ffcc00; font-size:12px;">⭐⭐⭐⭐⭐</span>
-                <p style="margin:5px 0 0 0; font-size:13px; color:var(--text-muted);">reçu l'iphone 16 pro max ce matin meme !! frznchement j'y croyais pas trop avec le coup des fuseau horaire mais le refund est passer creme. c'est carrement du lourd merci maxime</p>
+                <b style="color:var(--accent-red);">@Kylian.94z</b> <span style="color:#ffcc00; font-size:12px;">⭐⭐⭐⭐⭐</span>
+                <p style="margin:5px 0 0 0; font-size:13px; color:var(--text-muted);">Iphone 16pm bien reçu ce matin ! No fake le refund est passé crème, masterclass max 🧠</p>
             </div>
+            
             <div class="review-card">
-                <b style="color:var(--accent-red);">@Nicoo_R1</b> <span style="color:#ffcc00; font-size:12px;">⭐⭐⭐⭐⭐</span>
-                <p style="margin:5px 0 0 0; font-size:13px; color:var(--text-muted);">Le colis vien de d'arriver !! emballage apple d'origine tout est nikel. Le numero de suivis envoyer direct apres c est rassurant de ouf. commande reçu en 3j grooos</p>
+                <b style="color:var(--accent-red);">@Yanis_R1</b> <span style="color:#ffcc00; font-size:12px;">⭐⭐⭐⭐⭐</span>
+                <p style="margin:5px 0 0 0; font-size:13px; color:var(--text-muted);">Colis reçu en 3j max, suivi envoyé direct après la commande. Carré de ouf 🔥</p>
             </div>
-            <div class="review-card">
-                <b style="color:var(--accent-red);">@Drill_92i</b> <span style="color:#ffcc00; font-size:12px;">⭐⭐⭐⭐⭐</span>
-                <p style="margin:5px 0 0 0; font-size:13px; color:var(--text-muted);">2eme fois je passe par max pr un macbook, tjr oci rapide jpp. recu en 4 jours chrono a la porte. aller y les yeux fermer l'equipe</p>
-            </div>
+            
             <button class="btn-confirm" onclick="closeM('reviewModal')" style="margin-top:10px;">Retour au store</button>
         </div>
     </div>
@@ -417,7 +401,7 @@
 
         let selectedProduct = null;
         let selectedStorage = "";
-        let globalOrderText = ""; // Sauvegarde du texte de la commande
+        let globalOrderText = "";
 
         function openRefundInfo() {
             if(tg.HapticFeedback) tg.HapticFeedback.impactOccurred('light');
@@ -485,7 +469,6 @@
             tg.openLink(url);
         }
 
-        // SELECTION APRES LE FORMULAIRE : TIROIR DE SELECTION DE PLATEFORME S'OUVRE
         function finishOrderForm() {
             const n = document.getElementById('nom').value.trim();
             const pr = document.getElementById('prenom').value.trim();
@@ -499,10 +482,8 @@
                 return; 
             }
 
-            // Génération et mémorisation du message
             globalOrderText = `🛒 NOUVELLE COMMANDE KPS 🛒\n\nProduit: ${selectedProduct.name} (${selectedStorage})\nPrix: ${selectedProduct.price}\n\nClient: ${pr} ${n}\nEmail: ${m}\nAdresse: ${a}`;
             
-            // On ferme le formulaire et on ouvre le superbe tiroir final
             document.getElementById('modal').style.display = 'none';
             document.getElementById('checkoutModal').style.display = 'flex';
             
@@ -510,7 +491,6 @@
             tg.BackButton.onClick(() => closeM('checkoutModal'));
         }
 
-        // REDIRECTION ADAPTÉE SELON LE CHOIX DU TIROIR
         function redirectToPlatform(platform) {
             if(tg.HapticFeedback) tg.HapticFeedback.notificationOccurred('success');
             
@@ -529,9 +509,11 @@
             });
         }
 
+        // CHARGEMENT RALENTI (Plus long et immersif comme demandé)
         let pct = 0;
         const loader = setInterval(() => {
-            pct += Math.floor(Math.random() * 8) + 4;
+            // Augmentation par petits pas plus réalistes (entre 1% et 4% par intervalle)
+            pct += Math.floor(Math.random() * 3) + 1;
             if(pct >= 100) {
                 pct = 100; clearInterval(loader);
                 setTimeout(() => {
@@ -539,11 +521,11 @@
                     document.getElementById('splash-screen').style.visibility = 'hidden';
                     document.getElementById('main-content').style.opacity = '1';
                     document.getElementById('main-content').style.transform = 'translateY(0)';
-                }, 350);
+                }, 400);
             }
             document.getElementById('bar').style.width = pct + '%';
             document.getElementById('loading-pct').innerText = pct + '%';
-        }, 45);
+        }, 75); // Intervalle augmenté de 45ms à 75ms pour étirer le temps de chargement
     </script>
 </body>
 </html>
