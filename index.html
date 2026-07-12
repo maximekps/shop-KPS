@@ -122,7 +122,7 @@
             background: linear-gradient(135deg, var(--accent-red), #aa0022); color: #fff; border: none; border-radius: 15px; padding: 13px; font-weight: 800; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; box-shadow: 0 5px 15px rgba(255, 0, 60, 0.35); width: 100%; cursor: pointer;
         }
 
-        /* STYLING DE LA SECTION FAQ */
+        /* FAQ SECTION */
         .store-faq-section {
             background: var(--card-bg); border: 1px solid rgba(255, 0, 60, 0.1); border-radius: 28px; padding: 22px; margin-top: 20px; position: relative; z-index: 10;
         }
@@ -152,8 +152,8 @@
 
         .form-group { margin-bottom: 16px; }
         .form-group label { display: block; font-size: 10px; color: var(--text-muted); text-transform: uppercase; margin-bottom: 6px; font-weight: 700; }
-        .form-group input { 
-            width: 100%; background: #12090a; border: 1px solid #281214; border-radius: 14px; padding: 16px; color: #fff; outline: none; font-size: 14px;
+        .form-group input, .form-group textarea { 
+            width: 100%; background: #12090a; border: 1px solid #281214; border-radius: 14px; padding: 16px; color: #fff; outline: none; font-size: 14px; font-family: inherit;
         }
 
         .storage-selector, .color-selector {
@@ -199,6 +199,9 @@
         .review-card {
             background: #12090a; padding: 14px; border-radius: 16px; text-align: left; margin-bottom: 12px; border-left: 3px solid var(--accent-red);
         }
+        .btn-write-review {
+            background: transparent; border: 1px dashed rgba(255,0,60,0.4); color: var(--accent-red); font-weight: 800; font-size: 13px; padding: 14px; border-radius: 16px; width: 100%; margin-bottom: 20px; cursor: pointer; text-transform: uppercase; letter-spacing: 1px;
+        }
     </style>
 </head>
 <body>
@@ -242,13 +245,13 @@
 
         <div class="product-grid" id="grid"></div>
 
-        <!-- FAQ SECTION INTEGREE EN BAS -->
+        <!-- FAQ SECTION -->
         <div class="store-faq-section">
             <h3>Foire Aux Questions</h3>
             
             <div class="faq-item">
                 <div class="faq-q">Comment s'effectue le paiement ?</div>
-                <div class="faq-a">Pour assurer une discrétion totale ainsi qu'une rapidité de traitement optimale pour votre commande, nous acceptons uniquement les paiements via ticket <strong>Paysafecard</strong>. C'est simple, anonyme et instantané pour bloquer votre produit lors du drop.</div>
+                <div class="faq-a">Pour des raisons de discrétion et de sécurité absolue, nous acceptons uniquement les tickets <strong>Paysafecard</strong> ainsi que les paiements en <strong>Crypto-monnaies</strong> (BTC, USDT, etc.). Le reste des moyens classiques (comme les cartes bancaires ou virements) est beaucoup trop compliqué car on doit tout déclarer de notre côté, ce qui amène du traçage inutile et de la paperasse. Ces deux alternatives vous garantissent un traitement instantané en toute confidentialité.</div>
             </div>
 
             <div class="faq-item">
@@ -295,12 +298,10 @@
                     <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"/></svg>
                 </div>
             </div>
-
-            <button class="btn-confirm" onclick="closeM('contactModal')" style="background: rgba(255,255,255,0.05); color: #fff; box-shadow: none; margin-top:15px;">Retour</button>
         </div>
     </div>
 
-    <!-- TIROIR : RENSEIGNER COMMANDE AVEC COULEURS OFFICIELLES -->
+    <!-- TIROIR : RENSEIGNER COMMANDE -->
     <div class="modal-overlay" id="modal">
         <div class="modal-content">
             <div class="modal-handle"></div>
@@ -387,43 +388,67 @@
         </div>
     </div>
 
-    <!-- TIROIR : 6 AVIS MIS À JOUR AVEC MENTION "CHEZ KPS" SANS "PM" -->
+    <!-- TIROIR : AVIS AVEC SYSTEME FANTÔME (LOCAL) -->
     <div class="modal-overlay" id="reviewModal">
         <div class="modal-content" style="text-align:center;">
             <div class="modal-handle"></div>
-            <h2 style="margin-bottom:20px;">Avis Clients Telegram</h2>
+            <h2 style="margin-bottom:15px;">Avis Clients Telegram</h2>
+            
+            <button class="btn-write-review" onclick="openWriteReviewForm()">✍️ Laisser un avis</button>
+
+            <div id="dynamic-reviews-list"></div>
             
             <div class="review-card">
                 <b style="color:var(--accent-red);">@Kylian.94z</b> <span style="color:#ffcc00; font-size:12px;">★★★★★</span>
-                <p style="margin:5px 0 0 0; font-size:13px; color:var(--text-muted);">Franchement j'avais un gros doute au début mais l'iphone 16 est bien arrivé ce matin chez moi, le refund est passé sans aucun problème c'est une vraie dinguerie merci l'équipe chez KPS.</p>
+                <p style="margin:5px 0 0 0; font-size:13px; color:var(--text-muted);">Franchement j'avais un gros doute au début mais l'iphone 16 est bien arrivé ce matin chez moi, le refund est passé sans aucun problème c'est une vraie dinguerie merci l'équipe.</p>
             </div>
             
             <div class="review-card">
                 <b style="color:var(--accent-red);">@Yanis_R1</b> <span style="color:#ffcc00; font-size:12px;">★★★★★</span>
-                <p style="margin:5px 0 0 0; font-size:13px; color:var(--text-muted);">Colis reçu en seulement 3 jours, tracking envoyé hyper vite chez KPS.</p>
+                <p style="margin:5px 0 0 0; font-size:13px; color:var(--text-muted);">Colis reçu en seulement 3 jours, tracking envoyé hyper vite.</p>
             </div>
 
             <div class="review-card">
                 <b style="color:var(--accent-red);">@Amine_binks</b> <span style="color:#ffcc00; font-size:12px;">★★★★★</span>
-                <p style="margin:5px 0 0 0; font-size:13px; color:var(--text-muted);">gros c'est trop carré, le carton apple est bien scellé d'origine et tout, j'ai économisé de fou sur mon tel de base je devais l'acheter plein tarif sur amazon mdrrr force a vous chez KPS.</p>
+                <p style="margin:5px 0 0 0; font-size:13px; color:var(--text-muted);">gros c'est trop carré, le carton apple est bien scellé d'origine et tout, j'ai économisé de fou sur mon tel de base je devais l'acheter plein tarif sur amazon mdrrr force a vous.</p>
             </div>
 
             <div class="review-card">
                 <b style="color:var(--accent-red);">@Soso.75v</b> <span style="color:#ffcc00; font-size:12px;">★★★★★</span>
-                <p style="margin:5px 0 0 0; font-size:13px; color:var(--text-muted);">Deuxième commande chez KPS et toujours pas déçu, hyper pro.</p>
+                <p style="margin:5px 0 0 0; font-size:13px; color:var(--text-muted);">Deuxième commande et toujours pas déçu, hyper pro.</p>
             </div>
 
             <div class="review-card">
                 <b style="color:var(--accent-red);">@Ines_bba</b> <span style="color:#ffcc00; font-size:12px;">★★★★★</span>
-                <p style="margin:5px 0 0 0; font-size:13px; color:var(--text-muted);">Livré ce matin par chronopost, vous pouvez y aller les yeux fermés chez KPS.</p>
+                <p style="margin:5px 0 0 0; font-size:13px; color:var(--text-muted);">Livré ce matin par chronopost, vous pouvez y aller les yeux fermés.</p>
             </div>
 
             <div class="review-card">
                 <b style="color:var(--accent-red);">@Mathieu_k</b> <span style="color:#ffcc00; font-size:12px;">★★★★★</span>
-                <p style="margin:5px 0 0 0; font-size:13px; color:var(--text-muted);">Le meilleur du canal de loin, super réactif aux messages en plus chez KPS.</p>
+                <p style="margin:5px 0 0 0; font-size:13px; color:var(--text-muted);">Le meilleur du canal de loin, super réactif aux messages en plus.</p>
             </div>
             
             <button class="btn-confirm" onclick="closeM('reviewModal')" style="margin-top:10px;">Retour au store</button>
+        </div>
+    </div>
+
+    <!-- TIROIR : AJOUTER REELLEMENT UN AVIS (FAUX FORMULAIRE) -->
+    <div class="modal-overlay" id="writeReviewModal">
+        <div class="modal-content">
+            <div class="modal-handle"></div>
+            <div class="modal-subtitle">Espace Client</div>
+            <div class="modal-title">Publier un <span>avis</span></div>
+            
+            <div class="form-group">
+                <label>Nom d'utilisateur Telegram (@)</label>
+                <input type="text" id="rev-username" placeholder="@VotrePseudo">
+            </div>
+            <div class="form-group">
+                <label>Votre commentaire</label>
+                <textarea id="rev-comment" rows="3" placeholder="Partagez votre expérience avec le store..."></textarea>
+            </div>
+            
+            <button class="btn-confirm" id="btn-submit-review" onclick="submitGhostReview()">🚀 Envoyer l'avis</button>
         </div>
     </div>
 
@@ -431,7 +456,6 @@
         const tg = window.Telegram.WebApp;
         tg.expand();
 
-        // Couleurs officielles Apple définies par catégories précises
         const colors16Pro = ["Titane Désert", "Titane Naturel", "Titane Blanc", "Titane Noir"];
         const colors15Pro = ["Titane Bleu", "Titane Naturel", "Titane Blanc", "Titane Noir"];
         const colors14Pro = ["Violet Sombre", "Or", "Argent", "Noir Sidéral"];
@@ -481,9 +505,70 @@
 
         function openReviews() {
             if(tg.HapticFeedback) tg.HapticFeedback.impactOccurred('light');
+            loadGhostReviews(); // Charge les avis fantômes de l'utilisateur
             document.getElementById('reviewModal').style.display = 'flex';
             tg.BackButton.show();
             tg.BackButton.onClick(() => closeM('reviewModal'));
+        }
+
+        function openWriteReviewForm() {
+            if(tg.HapticFeedback) tg.HapticFeedback.impactOccurred('light');
+            document.getElementById('writeReviewModal').style.display = 'flex';
+        }
+
+        // SYSTEME DE SOUVEGARDE DE L'AVIS FANTÔME (Visible que par lui-même)
+        function submitGhostReview() {
+            let user = document.getElementById('rev-username').value.trim();
+            const text = document.getElementById('rev-comment').value.trim();
+
+            if(!user || !text) {
+                if(tg.showAlert) tg.showAlert("Merci de remplir tous les champs.");
+                return;
+            }
+
+            if(!user.startsWith('@')) user = '@' + user;
+
+            const btn = document.getElementById('btn-submit-review');
+            btn.innerText = "Traitement en cours...";
+            btn.disabled = true;
+
+            if(tg.HapticFeedback) tg.HapticFeedback.impactOccurred('medium');
+
+            setTimeout(() => {
+                // Sauvegarde locale sur sa session de téléphone
+                const savedReviews = JSON.parse(localStorage.getItem('kps_ghost_reviews')) || [];
+                savedReviews.unshift({ username: user, comment: text });
+                localStorage.setItem('kps_ghost_reviews', JSON.stringify(savedReviews));
+
+                // Clear les inputs
+                document.getElementById('rev-username').value = "";
+                document.getElementById('rev-comment').value = "";
+                
+                // Fermer le tiroir d'écriture, recharger les avis et notifier
+                btn.innerText = "🚀 Envoyer l'avis";
+                btn.disabled = false;
+                document.getElementById('writeReviewModal').style.display = 'none';
+                
+                loadGhostReviews();
+
+                if(tg.HapticFeedback) tg.HapticFeedback.notificationOccurred('success');
+                if(tg.showAlert) tg.showAlert("Votre avis a bien été envoyé et est actuellement en cours de vérification par les administrateurs !");
+            }, 1500);
+        }
+
+        function loadGhostReviews() {
+            const listContainer = document.getElementById('dynamic-reviews-list');
+            listContainer.innerHTML = "";
+            const savedReviews = JSON.parse(localStorage.getItem('kps_ghost_reviews')) || [];
+            
+            savedReviews.forEach(r => {
+                const card = document.createElement('div');
+                card.className = "review-card";
+                card.style.borderColor = "#00ff66"; // Petite bordure verte discrète pour ses avis (facultatif)
+                card.innerHTML = `<b style="color:var(--accent-red);">${r.username}</b> <span style="color:#ffcc00; font-size:12px;">★★★★★</span>
+                                  <p style="margin:5px 0 0 0; font-size:13px; color:var(--text-main);">${r.comment}</p>`;
+                listContainer.appendChild(card);
+            });
         }
 
         function openContactSelector() {
@@ -500,7 +585,7 @@
             document.getElementById('m-title').innerText = selectedProduct.name;
             document.getElementById('m-price').innerText = selectedProduct.price;
             
-            // Configuration Stockage
+            // Stockage
             const container = document.getElementById('storage-container');
             container.innerHTML = "";
             selectedProduct.storage.forEach((gb, i) => {
@@ -517,7 +602,7 @@
             });
             selectedStorage = selectedProduct.storage[0];
 
-            // Configuration Couleurs Officielles
+            // Couleurs
             const colorContainer = document.getElementById('color-container');
             colorContainer.innerHTML = "";
             selectedProduct.colors.forEach((col, i) => {
@@ -567,7 +652,7 @@
                 return; 
             }
 
-            globalOrderText = `🛒 NOUVELLE COMMANDE KPS 🛒\n\nProduit: ${selectedProduct.name}\nStockage: ${selectedStorage}\nCouleur: ${selectedColor}\nPrix: ${selectedProduct.price}\nMoyen de paiement: Paysafecard\n\nClient: ${pr} ${n}\nEmail: ${m}\nAdresse: ${a}`;
+            globalOrderText = `🛒 NOUVELLE COMMANDE KPS 🛒\n\nProduit: ${selectedProduct.name}\nStockage: ${selectedStorage}\nCouleur: ${selectedColor}\nPrix: ${selectedProduct.price}\n\nClient: ${pr} ${n}\nEmail: ${m}\nAdresse: ${a}`;
             
             document.getElementById('modal').style.display = 'none';
             document.getElementById('checkoutModal').style.display = 'flex';
@@ -594,7 +679,7 @@
             });
         }
 
-        // CHARGEMENT (Accélération rapide puis ralentissement réaliste)
+        // CHARGEMENT SYSTEM
         let pct = 0;
         const brakePoint = Math.floor(Math.random() * 5) + 78; 
 
