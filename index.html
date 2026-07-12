@@ -127,6 +127,7 @@
         }
         .modal-content {
             width: 100%; background: #0b0607; border-radius: 32px 32px 0 0; padding: 30px; border-top: 2px solid rgba(255, 0, 60, 0.3); animation: slideUp 0.35s cubic-bezier(0.15, 1, 0.2, 1);
+            max-height: 85vh; overflow-y: auto;
         }
         @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
 
@@ -233,6 +234,7 @@
         <div class="product-grid" id="grid"></div>
     </div>
 
+    <!-- TIROIR : NOUS CONTACTER -->
     <div class="modal-overlay" id="contactModal">
         <div class="modal-content">
             <div class="modal-handle"></div>
@@ -269,6 +271,7 @@
         </div>
     </div>
 
+    <!-- TIROIR : RENSEIGNER COMMANDE -->
     <div class="modal-overlay" id="modal">
         <div class="modal-content">
             <div class="modal-handle"></div>
@@ -290,6 +293,7 @@
         </div>
     </div>
 
+    <!-- TIROIR FINALISATION MODE HOODAPP -->
     <div class="modal-overlay" id="checkoutModal">
         <div class="modal-content">
             <div class="modal-handle"></div>
@@ -334,6 +338,7 @@
         </div>
     </div>
 
+    <!-- TIROIR : RENSEIGNEMENTS REFUND -->
     <div class="modal-overlay" id="refundModal">
         <div class="modal-content">
             <div class="modal-handle"></div>
@@ -348,6 +353,7 @@
         </div>
     </div>
 
+    <!-- TIROIR : 8 AVIS PHRASE COURTE ET STYLE HUMAIN / REEL -->
     <div class="modal-overlay" id="reviewModal">
         <div class="modal-content" style="text-align:center;">
             <div class="modal-handle"></div>
@@ -355,12 +361,42 @@
             
             <div class="review-card">
                 <b style="color:var(--accent-red);">@Kylian.94z</b> <span style="color:#ffcc00; font-size:12px;">⭐⭐⭐⭐⭐</span>
-                <p style="margin:5px 0 0 0; font-size:13px; color:var(--text-muted);">Iphone 16pm bien reçu ce matin ! No fake le refund est passé crème, masterclass max 🧠</p>
+                <p style="margin:5px 0 0 0; font-size:13px; color:var(--text-muted);">16pm reçu ! Refund passé crème, masterclass max 🧠</p>
             </div>
             
             <div class="review-card">
                 <b style="color:var(--accent-red);">@Yanis_R1</b> <span style="color:#ffcc00; font-size:12px;">⭐⭐⭐⭐⭐</span>
-                <p style="margin:5px 0 0 0; font-size:13px; color:var(--text-muted);">Colis reçu en 3j max, suivi envoyé direct après la commande. Carré de ouf 🔥</p>
+                <p style="margin:5px 0 0 0; font-size:13px; color:var(--text-muted);">Colis reçu en 3j, suivi envoyé direct. Carré de ouf 🔥</p>
+            </div>
+
+            <div class="review-card">
+                <b style="color:var(--accent-red);">@Amine_binks</b> <span style="color:#ffcc00; font-size:12px;">⭐⭐⭐⭐⭐</span>
+                <p style="margin:5px 0 0 0; font-size:13px; color:var(--text-muted);">J'avais trop peur mais c'est bien scellé wsh. Merci fort !!</p>
+            </div>
+
+            <div class="review-card">
+                <b style="color:var(--accent-red);">@Soso.75v</b> <span style="color:#ffcc00; font-size:12px;">⭐⭐⭐⭐⭐</span>
+                <p style="margin:5px 0 0 0; font-size:13px; color:var(--text-muted);">2e commande chez Maxime, tjs aussi propre 🙌</p>
+            </div>
+
+            <div class="review-card">
+                <b style="color:var(--accent-red);">@Enzo_92i</b> <span style="color:#ffcc00; font-size:12px;">⭐⭐⭐⭐⭐</span>
+                <p style="margin:5px 0 0 0; font-size:13px; color:var(--text-muted);">Le macbook est la, jsuis refait il a dead ça 😂</p>
+            </div>
+
+            <div class="review-card">
+                <b style="color:var(--accent-red);">@Ines_bba</b> <span style="color:#ffcc00; font-size:12px;">⭐⭐⭐⭐⭐</span>
+                <p style="margin:5px 0 0 0; font-size:13px; color:var(--text-muted);">Livré ce matin, foncez les yeux fermés c du lourd ⚡</p>
+            </div>
+
+            <div class="review-card">
+                <b style="color:var(--accent-red);">@Mathieu_k</b> <span style="color:#ffcc00; font-size:12px;">⭐⭐⭐⭐⭐</span>
+                <p style="margin:5px 0 0 0; font-size:13px; color:var(--text-muted);">Meilleur passeur de l'appli, sans bavure 🦾</p>
+            </div>
+
+            <div class="review-card">
+                <b style="color:var(--accent-red);">@Rayane_vvr</b> <span style="color:#ffcc00; font-size:12px;">⭐⭐⭐⭐⭐</span>
+                <p style="margin:5px 0 0 0; font-size:13px; color:var(--text-muted);">Validé de mon côté, tracking reçu super vite bzss</p>
             </div>
             
             <button class="btn-confirm" onclick="closeM('reviewModal')" style="margin-top:10px;">Retour au store</button>
@@ -509,10 +545,9 @@
             });
         }
 
-        // CHARGEMENT RALENTI (Plus long et immersif comme demandé)
+        // CHARGEMENT RALENTI (Stable, long et immersif)
         let pct = 0;
         const loader = setInterval(() => {
-            // Augmentation par petits pas plus réalistes (entre 1% et 4% par intervalle)
             pct += Math.floor(Math.random() * 3) + 1;
             if(pct >= 100) {
                 pct = 100; clearInterval(loader);
@@ -525,7 +560,7 @@
             }
             document.getElementById('bar').style.width = pct + '%';
             document.getElementById('loading-pct').innerText = pct + '%';
-        }, 75); // Intervalle augmenté de 45ms à 75ms pour étirer le temps de chargement
+        }, 75);
     </script>
 </body>
 </html>
