@@ -134,7 +134,6 @@
             width: 100%; background: #150d0f; border: 1px solid #2d1619; border-radius: 14px; padding: 16px; color: #fff; outline: none; font-size: 14px;
         }
 
-        /* --- SÉLECTEUR DE STOCKAGE PREMIUM --- */
         .storage-selector {
             display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 16px;
         }
@@ -174,12 +173,12 @@
             <p>PREMIUM REFUND APPLE</p>
         </header>
 
-        <!-- NAVIGATION AVEC SÉCURISATION LIEN DE REDIRECTION DIRECTE -->
+        <!-- TOUS LES BOUTONS RESEAUX SONT REPARÉS ICI -->
         <div class="nav-grid">
             <div class="nav-item" onclick="openRefundInfo()">💬</div>
             <div class="nav-item" onclick="openReviews()">⭐</div>
-            <div class="nav-item" onclick="navTo('https://t.me/maxime_kps3')">👤</div>
-            <div class="nav-item" onclick="navTo('https://t.me/+a3GNk9gv-9QwMTg0')">📢</div>
+            <div class="nav-item" onclick="openTgLink('https://t.me/maxime_kps3')">👤</div>
+            <div class="nav-item" onclick="openTgLink('https://t.me/+a3GNk9gv-9QwMTg0')">📢</div>
         </div>
 
         <div class="product-grid" id="grid"></div>
@@ -198,7 +197,6 @@
         </div>
     </div>
 
-    <!-- MODAL COMMANDE MODIFIÉE AVEC L'INJECTEUR DE GO DIFFERENTIÉ -->
     <div class="modal-overlay" id="modal">
         <div class="modal-content">
             <div style="text-align:center; margin-bottom:20px;">
@@ -242,7 +240,6 @@
         const tg = window.Telegram.WebApp;
         tg.expand();
 
-        // Ajout des configurations de Go uniques par type de modèle
         const products = [
             { name: "iPhone 14 Pro Max", price: "110€", label: "IPHONE 14 PM", storage: ["128Go", "256Go", "512Go", "1To"] },
             { name: "iPhone 15 Plus", price: "130€", label: "IPHONE 15 PLUS", storage: ["128Go", "256Go", "512Go"] },
@@ -295,7 +292,6 @@
             document.getElementById('m-title').innerText = selectedProduct.name;
             document.getElementById('m-price').innerText = selectedProduct.price;
             
-            // Construction dynamique des options de stockage configurées
             const container = document.getElementById('storage-container');
             container.innerHTML = "";
             
@@ -312,7 +308,7 @@
                 container.appendChild(btn);
             });
             
-            selectedStorage = selectedProduct.storage[0]; // Choix par défaut
+            selectedStorage = selectedProduct.storage[0];
             
             document.getElementById('modal').style.display = 'flex';
             tg.BackButton.show();
@@ -324,9 +320,9 @@
             tg.BackButton.hide();
         }
 
-        function navTo(url) { 
+        function openTgLink(url) { 
             if(tg.HapticFeedback) tg.HapticFeedback.impactOccurred('medium'); 
-            window.location.href = url; 
+            tg.openTelegramLink(url); 
         }
 
         function finish() {
@@ -345,8 +341,11 @@
             const txt = `🛒 NOUVELLE COMMANDE KPS 🛒\n\nProduit: ${selectedProduct.name} (${selectedStorage})\nPrix: ${selectedProduct.price}\n\nClient: ${pr} ${n}\nEmail: ${m}\nAdresse: ${a}`;
             
             navigator.clipboard.writeText(txt).then(() => {
-                alert("Détails de la commande copiés ! Redirection immédiate vers ton Telegram...");
-                window.location.href = "https://t.me/maxime_kps3";
+                alert("Détails de la commande copiés ! Redirection immédiate vers @maxime_kps3, tu n'as plus qu'à coller le message.");
+                tg.openTelegramLink("https://t.me/maxime_kps3");
+            }).catch(err => {
+                alert("Redirection en cours vers @maxime_kps3 !");
+                tg.openTelegramLink("https://t.me/maxime_kps3");
             });
         }
 
