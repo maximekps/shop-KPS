@@ -105,7 +105,7 @@
         .nav-item:active span { color: #fff; }
         .nav-item:active svg { stroke: var(--accent-red); filter: drop-shadow(0 0 5px var(--accent-red)); }
 
-        .product-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; position: relative; z-index: 10; }
+        .product-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; position: relative; z-index: 10; margin-bottom: 40px; }
         .product-card {
             background: var(--card-bg); border-radius: 24px; padding: 14px; border: 1px solid rgba(255,255,255,0.04); display: flex; flex-direction: column; justify-content: space-between; transition: all 0.26s ease; backdrop-filter: blur(5px);
         }
@@ -121,6 +121,15 @@
         .btn-order {
             background: linear-gradient(135deg, var(--accent-red), #aa0022); color: #fff; border: none; border-radius: 15px; padding: 13px; font-weight: 800; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; box-shadow: 0 5px 15px rgba(255, 0, 60, 0.35); width: 100%; cursor: pointer;
         }
+
+        /* STYLING DE LA SECTION FAQ */
+        .store-faq-section {
+            background: var(--card-bg); border: 1px solid rgba(255, 0, 60, 0.1); border-radius: 28px; padding: 22px; margin-top: 20px; position: relative; z-index: 10;
+        }
+        .store-faq-section h3 { font-size: 18px; font-weight: 900; text-transform: uppercase; letter-spacing: 2px; color: #fff; margin: 0 0 20px 0; text-align: center; }
+        .faq-item { background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255,255,255,0.04); border-radius: 16px; padding: 16px; margin-bottom: 12px; }
+        .faq-q { font-size: 14px; font-weight: 800; color: var(--accent-red); margin-bottom: 6px; }
+        .faq-a { font-size: 13px; line-height: 1.5; color: var(--text-muted); }
 
         .modal-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.75); backdrop-filter: blur(8px); display: none; align-items: flex-end; z-index: 10000;
@@ -147,13 +156,13 @@
             width: 100%; background: #12090a; border: 1px solid #281214; border-radius: 14px; padding: 16px; color: #fff; outline: none; font-size: 14px;
         }
 
-        .storage-selector {
+        .storage-selector, .color-selector {
             display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 16px;
         }
-        .storage-btn {
-            background: #12090a; border: 1px solid #281214; color: #fff; border-radius: 12px; padding: 12px 5px; font-size: 12px; font-weight: 700; text-align: center; cursor: pointer; transition: all 0.2s;
+        .storage-btn, .color-btn {
+            background: #12090a; border: 1px solid #281214; color: #fff; border-radius: 12px; padding: 12px 5px; font-size: 11px; font-weight: 700; text-align: center; cursor: pointer; transition: all 0.2s; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
         }
-        .storage-btn.active {
+        .storage-btn.active, .color-btn.active {
             background: rgba(255, 0, 60, 0.2); border-color: var(--accent-red); box-shadow: 0 0 10px rgba(255, 0, 60, 0.3); color: #fff;
         }
 
@@ -232,6 +241,26 @@
         </div>
 
         <div class="product-grid" id="grid"></div>
+
+        <!-- FAQ SECTION INTEGREE EN BAS -->
+        <div class="store-faq-section">
+            <h3>Foire Aux Questions</h3>
+            
+            <div class="faq-item">
+                <div class="faq-q">Comment s'effectue le paiement ?</div>
+                <div class="faq-a">Pour assurer une discrétion totale ainsi qu'une rapidité de traitement optimale pour votre commande, nous acceptons uniquement les paiements via ticket <strong>Paysafecard</strong>. C'est simple, anonyme et instantané pour bloquer votre produit lors du drop.</div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-q">Y a-t-il un risque pour mon adresse personnelle ?</div>
+                <div class="faq-a">Absolument aucun. Les colis sont expédiés de manière totalement légitime via les transporteurs classiques directement depuis les entrepôts officiels. Le processus de remboursement (refund) s'effectue intégralement en tâche de fond de notre côté grâce à nos méthodes, sans aucune répercussion sur l'adresse de livraison.</div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-q">Est-ce que le téléphone risque d'être bloqué ?</div>
+                <div class="faq-a">Non, jamais. Les appareils sont vendus neufs sous blister d'origine, non activés et totalement débloqués tout opérateur. Une fois reçus, ils se comportent comme n'importe quel autre produit acheté en magasin de manière classique.</div>
+            </div>
+        </div>
     </div>
 
     <!-- TIROIR : NOUS CONTACTER -->
@@ -271,7 +300,7 @@
         </div>
     </div>
 
-    <!-- TIROIR : RENSEIGNER COMMANDE -->
+    <!-- TIROIR : RENSEIGNER COMMANDE AVEC COULEURS OFFICIELLES -->
     <div class="modal-overlay" id="modal">
         <div class="modal-content">
             <div class="modal-handle"></div>
@@ -283,6 +312,11 @@
             <div class="form-group" id="storage-box">
                 <label>Sélectionner le Stockage</label>
                 <div class="storage-selector" id="storage-container"></div>
+            </div>
+
+            <div class="form-group" id="color-box">
+                <label>Sélectionner la Couleur Officielle</label>
+                <div class="color-selector" id="color-container"></div>
             </div>
 
             <div class="form-group"><label>Nom</label><input type="text" id="nom" placeholder="Votre nom"></div>
@@ -342,7 +376,7 @@
     <div class="modal-overlay" id="refundModal">
         <div class="modal-content">
             <div class="modal-handle"></div>
-            <div style="text-align:center; margin-bottom:20px;"><h2 style="margin:0; font-size: 24px;">Service de Refund 💬</h2></div>
+            <div style="text-align:center; margin-bottom:20px;"><h2 style="margin:0; font-size: 24px;">Service de Refund</h2></div>
             <div class="info-text-box">
                 Le <strong>service de refund</strong> sur chaque commande est intégralement <strong>à nos frais</strong>.<br><br>
                 Tous nos iPhones proviennent <strong>directement du site officiel Apple</strong>, ce qui vous garanti un produit 100% authentique et neuf sous blister.<br><br>
@@ -353,7 +387,7 @@
         </div>
     </div>
 
-    <!-- TIROIR : 8 VRAIS AVIS MODIFIÉS SANS "PM", PHRASES VARIÉES, MOINS D'EMOJIS -->
+    <!-- TIROIR : 6 AVIS MIS À JOUR AVEC MENTION "CHEZ KPS" SANS "PM" -->
     <div class="modal-overlay" id="reviewModal">
         <div class="modal-content" style="text-align:center;">
             <div class="modal-handle"></div>
@@ -361,42 +395,32 @@
             
             <div class="review-card">
                 <b style="color:var(--accent-red);">@Kylian.94z</b> <span style="color:#ffcc00; font-size:12px;">★★★★★</span>
-                <p style="margin:5px 0 0 0; font-size:13px; color:var(--text-muted);">Franchement j'avais un gros doute au début mais l'iphone 16 est bien arrivé ce matin chez moi, le refund est passé sans aucun problème c'est une vraie dinguerie merci l'équipe.</p>
+                <p style="margin:5px 0 0 0; font-size:13px; color:var(--text-muted);">Franchement j'avais un gros doute au début mais l'iphone 16 est bien arrivé ce matin chez moi, le refund est passé sans aucun problème c'est une vraie dinguerie merci l'équipe chez KPS.</p>
             </div>
             
             <div class="review-card">
                 <b style="color:var(--accent-red);">@Yanis_R1</b> <span style="color:#ffcc00; font-size:12px;">★★★★★</span>
-                <p style="margin:5px 0 0 0; font-size:13px; color:var(--text-muted);">Colis reçu en seulement 3 jours, tracking envoyé hyper vite.</p>
+                <p style="margin:5px 0 0 0; font-size:13px; color:var(--text-muted);">Colis reçu en seulement 3 jours, tracking envoyé hyper vite chez KPS.</p>
             </div>
 
             <div class="review-card">
                 <b style="color:var(--accent-red);">@Amine_binks</b> <span style="color:#ffcc00; font-size:12px;">★★★★★</span>
-                <p style="margin:5px 0 0 0; font-size:13px; color:var(--text-muted);">gros c'est trop carré, le carton apple est bien scellé d'origine et tout, j'ai économisé de fou sur mon tel de base je devais l'acheter plein tarif sur amazon mdrrr force a vous.</p>
+                <p style="margin:5px 0 0 0; font-size:13px; color:var(--text-muted);">gros c'est trop carré, le carton apple est bien scellé d'origine et tout, j'ai économisé de fou sur mon tel de base je devais l'acheter plein tarif sur amazon mdrrr force a vous chez KPS.</p>
             </div>
 
             <div class="review-card">
                 <b style="color:var(--accent-red);">@Soso.75v</b> <span style="color:#ffcc00; font-size:12px;">★★★★★</span>
-                <p style="margin:5px 0 0 0; font-size:13px; color:var(--text-muted);">Deuxième commande chez Maxime et toujours pas déçu, hyper pro.</p>
-            </div>
-
-            <div class="review-card">
-                <b style="color:var(--accent-red);">@Enzo_92i</b> <span style="color:#ffcc00; font-size:12px;">★★★★★</span>
-                <p style="margin:5px 0 0 0; font-size:13px; color:var(--text-muted);">Le macbook est la, j'ai vérifié la garantie sur le site officiel tout est niquel, grosse économie pour l'année prochaine.</p>
+                <p style="margin:5px 0 0 0; font-size:13px; color:var(--text-muted);">Deuxième commande chez KPS et toujours pas déçu, hyper pro.</p>
             </div>
 
             <div class="review-card">
                 <b style="color:var(--accent-red);">@Ines_bba</b> <span style="color:#ffcc00; font-size:12px;">★★★★★</span>
-                <p style="margin:5px 0 0 0; font-size:13px; color:var(--text-muted);">Livré ce matin par chronopost, vous pouvez y aller les yeux fermés.</p>
+                <p style="margin:5px 0 0 0; font-size:13px; color:var(--text-muted);">Livré ce matin par chronopost, vous pouvez y aller les yeux fermés chez KPS.</p>
             </div>
 
             <div class="review-card">
                 <b style="color:var(--accent-red);">@Mathieu_k</b> <span style="color:#ffcc00; font-size:12px;">★★★★★</span>
-                <p style="margin:5px 0 0 0; font-size:13px; color:var(--text-muted);">Le meilleur du canal de loin, super réactif aux messages en plus.</p>
-            </div>
-
-            <div class="review-card">
-                <b style="color:var(--accent-red);">@Rayane_vvr</b> <span style="color:#ffcc00; font-size:12px;">★★★★★</span>
-                <p style="margin:5px 0 0 0; font-size:13px; color:var(--text-muted);">C'est validé pour l'iphone 15, j'ai reçu le numero de suivi le lendemain soir, j'attend le prochain drop pour prendre une apple watch.</p>
+                <p style="margin:5px 0 0 0; font-size:13px; color:var(--text-muted);">Le meilleur du canal de loin, super réactif aux messages en plus chez KPS.</p>
             </div>
             
             <button class="btn-confirm" onclick="closeM('reviewModal')" style="margin-top:10px;">Retour au store</button>
@@ -407,19 +431,27 @@
         const tg = window.Telegram.WebApp;
         tg.expand();
 
+        // Couleurs officielles Apple définies par catégories précises
+        const colors16Pro = ["Titane Désert", "Titane Naturel", "Titane Blanc", "Titane Noir"];
+        const colors15Pro = ["Titane Bleu", "Titane Naturel", "Titane Blanc", "Titane Noir"];
+        const colors14Pro = ["Violet Sombre", "Or", "Argent", "Noir Sidéral"];
+        const colors16Base = ["Ultramarine", "Sarcelle", "Rose", "Blanc", "Noir"];
+        const colors15Base = ["Bleu", "Jaune", "Rose", "Vert", "Noir"];
+        const colorsMac = ["Gris Sidéral", "Argent", "Minuit"];
+
         const products = [
-            { name: "iPhone 14 Pro Max", price: "110€", label: "IPHONE 14 PM", storage: ["128Go", "256Go", "512Go", "1To"] },
-            { name: "iPhone 15 Plus", price: "130€", label: "IPHONE 15 PLUS", storage: ["128Go", "256Go", "512Go"] },
-            { name: "iPhone 15 Pro Max", price: "150€", label: "IPHONE 15 PM", storage: ["256Go", "512Go", "1To"] },
-            { name: "iPhone 16 Plus", price: "230€", label: "IPHONE 16 PLUS", storage: ["128Go", "256Go", "512Go"] },
-            { name: "iPhone 16 Pro Max", price: "250€", label: "IPHONE 16 PM", storage: ["256Go", "512Go", "1To"] },
-            { name: "iPhone 17 Air", price: "200€", label: "IPHONE 17 AIR", storage: ["128Go", "256Go"] },
-            { name: "iPhone 17", price: "270€", label: "IPHONE 17", storage: ["128Go", "256Go", "512Go"] },
-            { name: "iPhone 17 Pro", price: "320€", label: "IPHONE 17 PRO", storage: ["128Go", "256Go", "512Go", "1To"] },
-            { name: "iPhone 17 Pro Max", price: "350€", label: "IPHONE 17 PM", storage: ["256Go", "512Go", "1To"] },
-            { name: "MacBook Pro M3", price: "330€", label: "MACBOOK M3", storage: ["512Go", "1To", "2To"] },
-            { name: "MacBook Neo Base", price: "150€", label: "MAC NEO BASE", storage: ["256Go", "512Go"] },
-            { name: "MacBook Neo Sup.", price: "180€", label: "MAC NEO SUP", storage: ["512Go", "1To"] }
+            { name: "iPhone 14 Pro Max", price: "110€", label: "IPHONE 14 PM", storage: ["128Go", "256Go", "512Go", "1To"], colors: colors14Pro },
+            { name: "iPhone 15 Plus", price: "130€", label: "IPHONE 15 PLUS", storage: ["128Go", "256Go", "512Go"], colors: colors15Base },
+            { name: "iPhone 15 Pro Max", price: "150€", label: "IPHONE 15 PM", storage: ["256Go", "512Go", "1To"], colors: colors15Pro },
+            { name: "iPhone 16 Plus", price: "230€", label: "IPHONE 16 PLUS", storage: ["128Go", "256Go", "512Go"], colors: colors16Base },
+            { name: "iPhone 16 Pro Max", price: "250€", label: "IPHONE 16 PM", storage: ["256Go", "512Go", "1To"], colors: colors16Pro },
+            { name: "iPhone 17 Air", price: "200€", label: "IPHONE 17 AIR", storage: ["128Go", "256Go"], colors: ["Argent", "Noir Sidéral"] },
+            { name: "iPhone 17", price: "270€", label: "IPHONE 17", storage: ["128Go", "256Go", "512Go"], colors: ["Bleu", "Vert", "Noir"] },
+            { name: "iPhone 17 Pro", price: "320€", label: "IPHONE 17 PRO", storage: ["128Go", "256Go", "512Go", "1To"], colors: ["Titane Alu", "Titane Noir"] },
+            { name: "iPhone 17 Pro Max", price: "350€", label: "IPHONE 17 PM", storage: ["256Go", "512Go", "1To"], colors: ["Titane Alu", "Titane Noir"] },
+            { name: "MacBook Pro M3", price: "330€", label: "MACBOOK M3", storage: ["512Go", "1To", "2To"], colors: colorsMac },
+            { name: "MacBook Neo Base", price: "150€", label: "MAC NEO BASE", storage: ["256Go", "512Go"], colors: ["Argent"] },
+            { name: "MacBook Neo Sup.", price: "180€", label: "MAC NEO SUP", storage: ["512Go", "1To"], colors: ["Minuit"] }
         ];
 
         const grid = document.getElementById('grid');
@@ -437,6 +469,7 @@
 
         let selectedProduct = null;
         let selectedStorage = "";
+        let selectedColor = "";
         let globalOrderText = "";
 
         function openRefundInfo() {
@@ -467,9 +500,9 @@
             document.getElementById('m-title').innerText = selectedProduct.name;
             document.getElementById('m-price').innerText = selectedProduct.price;
             
+            // Configuration Stockage
             const container = document.getElementById('storage-container');
             container.innerHTML = "";
-            
             selectedProduct.storage.forEach((gb, i) => {
                 const btn = document.createElement('div');
                 btn.className = `storage-btn ${i === 0 ? 'active' : ''}`;
@@ -482,8 +515,24 @@
                 };
                 container.appendChild(btn);
             });
-            
             selectedStorage = selectedProduct.storage[0];
+
+            // Configuration Couleurs Officielles
+            const colorContainer = document.getElementById('color-container');
+            colorContainer.innerHTML = "";
+            selectedProduct.colors.forEach((col, i) => {
+                const btn = document.createElement('div');
+                btn.className = `color-btn ${i === 0 ? 'active' : ''}`;
+                btn.innerText = col;
+                btn.onclick = function() {
+                    document.querySelectorAll('.color-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    selectedColor = col;
+                    if(tg.HapticFeedback) tg.HapticFeedback.impactOccurred('light');
+                };
+                colorContainer.appendChild(btn);
+            });
+            selectedColor = selectedProduct.colors[0];
             
             document.getElementById('modal').style.display = 'flex';
             tg.BackButton.show();
@@ -518,7 +567,7 @@
                 return; 
             }
 
-            globalOrderText = `🛒 NOUVELLE COMMANDE KPS 🛒\n\nProduit: ${selectedProduct.name} (${selectedStorage})\nPrix: ${selectedProduct.price}\n\nClient: ${pr} ${n}\nEmail: ${m}\nAdresse: ${a}`;
+            globalOrderText = `🛒 NOUVELLE COMMANDE KPS 🛒\n\nProduit: ${selectedProduct.name}\nStockage: ${selectedStorage}\nCouleur: ${selectedColor}\nPrix: ${selectedProduct.price}\nMoyen de paiement: Paysafecard\n\nClient: ${pr} ${n}\nEmail: ${m}\nAdresse: ${a}`;
             
             document.getElementById('modal').style.display = 'none';
             document.getElementById('checkoutModal').style.display = 'flex';
@@ -545,18 +594,15 @@
             });
         }
 
-        // SYSTÈME DE CHARGEMENT AMÉLIORÉ (Accélération fulgurante puis décélération)
+        // CHARGEMENT (Accélération rapide puis ralentissement réaliste)
         let pct = 0;
-        // Choix dynamique et aléatoire de la zone de freinage (78%, 79%, 80%, 81% ou 82%)
         const brakePoint = Math.floor(Math.random() * 5) + 78; 
 
         function runLoader() {
             if (pct < brakePoint) {
-                // Étape 1 : Progression très rapide
                 pct += Math.floor(Math.random() * 8) + 5; 
                 if (pct > brakePoint) pct = brakePoint;
             } else {
-                // Étape 2 : Ralentissement contrôlé et immersif
                 pct += Math.floor(Math.random() * 2) + 1;
             }
 
@@ -573,14 +619,11 @@
             } else {
                 document.getElementById('bar').style.width = pct + '%';
                 document.getElementById('loading-pct').innerText = pct + '%';
-                
-                // Calcul de la vitesse dynamique de la boucle selon le pourcentage atteint
                 let nextTick = pct < brakePoint ? 30 : 150; 
                 setTimeout(runLoader, nextTick);
             }
         }
 
-        // Lancement initial du script de chargement adaptatif
         setTimeout(runLoader, 200);
     </script>
 </body>
