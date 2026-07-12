@@ -173,7 +173,6 @@
             <p>PREMIUM REFUND APPLE</p>
         </header>
 
-        <!-- TOUS LES BOUTONS RESEAUX SONT REPARÉS ICI -->
         <div class="nav-grid">
             <div class="nav-item" onclick="openRefundInfo()">💬</div>
             <div class="nav-item" onclick="openReviews()">⭐</div>
@@ -325,6 +324,7 @@
             tg.openTelegramLink(url); 
         }
 
+        // MISE À JOUR SÉCURISÉE AVEC LES ALERTES INITIALES TELEGRAM
         function finish() {
             const n = document.getElementById('nom').value.trim();
             const pr = document.getElementById('prenom').value.trim();
@@ -333,19 +333,35 @@
             
             if(!n || !pr || !m || !a) { 
                 if(tg.HapticFeedback) tg.HapticFeedback.notificationOccurred('error');
-                alert("Remplissez tous les champs."); 
+                if(tg.showAlert) {
+                    tg.showAlert("Remplissez tous les champs.");
+                } else {
+                    alert("Remplissez tous les champs.");
+                }
                 return; 
             }
 
             if(tg.HapticFeedback) tg.HapticFeedback.notificationOccurred('success');
             const txt = `🛒 NOUVELLE COMMANDE KPS 🛒\n\nProduit: ${selectedProduct.name} (${selectedStorage})\nPrix: ${selectedProduct.price}\n\nClient: ${pr} ${n}\nEmail: ${m}\nAdresse: ${a}`;
             
+            const actionRedirection = () => {
+                tg.openTelegramLink("https://t.me/maxime_kps3");
+            };
+
             navigator.clipboard.writeText(txt).then(() => {
-                alert("Détails de la commande copiés ! Redirection immédiate vers @maxime_kps3, tu n'as plus qu'à coller le message.");
-                tg.openTelegramLink("https://t.me/maxime_kps3");
+                if(tg.showAlert) {
+                    tg.showAlert("Détails de la commande copiés ! Redirection immédiate vers @maxime_kps3, tu n'as plus qu'à coller le message.", actionRedirection);
+                } else {
+                    alert("Détails de la commande copiés ! Redirection immédiate vers @maxime_kps3, tu n'as plus qu'à coller le message.");
+                    actionRedirection();
+                }
             }).catch(err => {
-                alert("Redirection en cours vers @maxime_kps3 !");
-                tg.openTelegramLink("https://t.me/maxime_kps3");
+                if(tg.showAlert) {
+                    tg.showAlert("Redirection en cours vers @maxime_kps3 !", actionRedirection);
+                } else {
+                    alert("Redirection en cours vers @maxime_kps3 !");
+                    actionRedirection();
+                }
             });
         }
 
